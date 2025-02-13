@@ -34,11 +34,11 @@
 */
 
 #ifdef MODE_128K
-	// Versión para 128K
+	// Versiï¿½n para 128K
 	#pragma output STACKPTR=23999
 	#define FREEPOOL 61697
 #else
-	// Versión para 48K
+	// Versiï¿½n para 48K
 	#pragma output STACKPTR=61936
 	#define FREEPOOL 61697
 #endif
@@ -92,6 +92,8 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	#include "assets/extrasprites.h"
 #endif
 
+
+
 #include "my/ci/extra_vars.h"
 
 #ifdef MODE_128K
@@ -117,7 +119,10 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	#include "my/msc.h"
 #endif
 
+
+
 #include "engine/general.h"
+
 #ifdef BREAKABLE_WALLS
 	#include "engine/breakable.h"
 #endif
@@ -135,6 +140,8 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 #include "engine/enengine.h"
 #include "engine/hotspots.h"
 
+
+
 #ifdef ENABLE_CHECKPOINTS
 	#include "savegame.h"
 #endif
@@ -145,3 +152,5 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	// From beepola. Phaser engine by Shiru.
 	#include "sound/music.h"
 #endif
+
+

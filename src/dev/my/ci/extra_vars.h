@@ -25,8 +25,5 @@ POINT boss_vector_path[10] = {
     {0,2}, {-2, 2}, {-2, 2}, {-2,2}, {-2,0}
 };
 
-const unsigned char *extra_enem_cells [] = {
-        extra_sprite_17_a, extra_sprite_18_a, extra_sprite_19_a, extra_sprite_20_a,
-        extra_sprite_21_a, extra_sprite_22_a, extra_sprite_23_a, extra_sprite_24_a
-    };
+
 

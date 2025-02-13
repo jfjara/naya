@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "levels.h": "c",
+        "sprites-empty.h": "c"
+    }
+}

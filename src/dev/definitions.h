@@ -324,7 +324,7 @@ unsigned char isrc;
 
 typedef struct 
 {
-	unsigned char n_pant, x, y;
+	unsigned char n_pant, x, y, gpit;
 } OBJECT;
 
 OBJECT objects[80];

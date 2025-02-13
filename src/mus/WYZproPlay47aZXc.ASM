@@ -1124,25 +1124,33 @@ INCLUDE "instrumentos.asm"
 ;; Las canciones tienen que estar comprimidas con aplib
 		    
 SONG_0:
-	INCBIN "01_TITLE!.mus.bin"
+	INCBIN "title!.mus.bin"
 SONG_1:
-	INCBIN "02_INTRO!!!.mus.bin"
+	INCBIN "sclear.mus.bin"
 SONG_2:
-	INCBIN "03_ZONE123!.mus.bin"
+	INCBIN "round.mus.bin"
 SONG_3:
-	INCBIN "04_FASE1.mus.bin"
+	INCBIN "ingame_a.mus.bin"
 SONG_4:
-	INCBIN "05_FASE2.mus.bin"
+	INCBIN "ingame_b.mus.bin"
 SONG_5:
-	INCBIN "06_FASE3.mus.bin"
+	INCBIN "ingame_c.mus.bin"
 SONG_6:
-	INCBIN "07_ZONE5!.mus.bin"
+	INCBIN "ingame_d.mus.bin"
 SONG_7:
-	INCBIN "08_FASE5.mus.bin"
+	INCBIN "ingame_e.mus.bin"
 SONG_8:
-	INCBIN "10_GAME_OVER!.mus.bin"
+	INCBIN "ingame_f.mus.bin"
 SONG_9:
-	INCBIN "09_ENDING!.mus.bin"
+	INCBIN "bonus.mus.bin"
+SONG_10:
+	INCBIN "boss.mus.bin"
+SONG_11:
+	INCBIN "dead.mus.bin"
+SONG_12:
+	INCBIN "gover.mus.bin"
+SONG_13:
+	INCBIN "ending.mus.bin"
 
 ;; INCLUIR LOS EFECTOS DE SONIDO:
 
@@ -1152,7 +1160,8 @@ INCLUDE "efectos.asm"
 				
 TABLA_SONG:     DW      SONG_0, SONG_1, SONG_2, SONG_3
 				DW      SONG_4, SONG_5, SONG_6, SONG_7
-				DW      SONG_8, SONG_9
+				DW      SONG_8, SONG_9, SONG_10, SONG_11
+				DW		SONG_12, SONG_13
 
 ;; Añadir entradas para cada efecto
 

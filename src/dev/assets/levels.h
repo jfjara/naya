@@ -113,7 +113,12 @@ extern unsigned char sprites [0];
 #endasm
 
 #if defined MODE_128K || defined PER_LEVEL_SPRITESET
-	#include "assets/sprites-empty.h"
+	//#include "assets/sprites-empty.h"
+	#include "assets/sprites.h"
+	const unsigned char *extra_enem_cells [] = {
+		extra_sprite_17_a, extra_sprite_18_a, extra_sprite_19_a, extra_sprite_20_a,
+		extra_sprite_21_a, extra_sprite_22_a, extra_sprite_23_a, extra_sprite_24_a
+	};
 #else
 	#include "assets/sprites.h"
 #endif

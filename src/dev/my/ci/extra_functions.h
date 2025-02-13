@@ -168,6 +168,7 @@ void draw_player_lives(void) {
 }
 
 void save_object(void) {
+    objects[objects_index].gpit = p_tx + (p_ty * 15);
     objects[objects_index].x =  p_tx;
     objects[objects_index].y =  p_ty;
     objects[objects_index].n_pant = n_pant;

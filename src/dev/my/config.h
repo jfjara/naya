@@ -12,7 +12,7 @@
 //#define USE_ARKOS_PLAYER					// Use Arkos instead of Wyz player for 128k Music
 //#define ARKOS_SFX_CHANNEL	0				// SFX Channel (0-2)
 //#define VENG_SELECTOR 					// Very advanced!
-#define USE_MAP_CUSTOM_DECODER
+//#define USE_MAP_CUSTOM_DECODER
 
 // In this section we define map dimensions, initial and authomatic ending conditions, etc.
 
