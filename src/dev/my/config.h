@@ -122,7 +122,7 @@
 #define LB_FRAMES 				    10		// If defined, defines the # of frames bullets live (fixed)
 //#define LB_FRAMES_FLAG			2		// If defined, defines which flag determines the # of frames
 
-#define RESPAWN_ON_ENTER					// Enemies respawn when entering screen
+//#define RESPAWN_ON_ENTER					// Enemies respawn when entering screen
 //#define FIRE_MIN_KILLABLE			3		// If defined, only enemies >= N can be killed.
 //#define CAN_FIRE_UP 						// If defined, player can fire upwards and diagonal.
 //#define MAX_AMMO					10		// If defined, ammo is not infinite!
@@ -130,7 +130,7 @@
 //#define INITIAL_AMMO				9		// If defined, ammo = X when entering game.
 
 #define BREAKABLE_WALLS 					// Breakable walls
-#define BREAKABLE_WALLS_LIFE	1			// Amount of hits to break wall
+#define BREAKABLE_WALLS_LIFE	    2			// Amount of hits to break wall
 
 // Scripting
 // ---------
@@ -278,7 +278,7 @@
 											// the value especifies first animated tile pair.
 #define PAUSE_ABORT						// Add h=PAUSE, y=ABORT
 //#define GET_X_MORE						// Shows "get X more" when getting an object
-#define HUD_INK 					7 		// Use this attribute for digits in the hud
+#define HUD_INK 					6 		// Use this attribute for digits in the hud
 
 // ============================================================================
 // IV. Player movement configuration

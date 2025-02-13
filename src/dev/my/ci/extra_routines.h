@@ -51,6 +51,10 @@ if (stage_clear_animation == 1) {
         n_pant = SCR_INICIO + slevel;
         gpx = PLAYER_INI_X << 4; p_x = gpx << 6;
         gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
+
+        for (rda = 0; rda < 80; rda++) {
+			objects[rda].n_pant = 99; objects[rda].x = objects[rda].y = 255;
+		}
         
         if (slevel == 3) {
             // vamos al nivel del boss

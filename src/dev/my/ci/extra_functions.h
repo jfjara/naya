@@ -107,9 +107,9 @@ void play_boss() {
 
 void draw_sub_boss_life() {
     if (_en_life_boss == 0) {
-        _x = 31; _y = 21 - _en_life_boss; _t = 5; _gp_gen = "$"; print_str ();
+        _x = 31; _y = 21 - _en_life_boss; _t = 5; _gp_gen =  (unsigned char *)("$"); print_str ();
     } else {
-        _x = 31; _y = 21 - _en_life_boss; _t = 5; _gp_gen = "!"; print_str ();
+        _x = 31; _y = 21 - _en_life_boss; _t = 5; _gp_gen =  (unsigned char *)("!"); print_str ();
     }
     
 }
@@ -117,9 +117,9 @@ void draw_sub_boss_life() {
 void draw_boss_life(void) {
     for (rda = 0; rda < _en_life_boss; rda++) {
         if (rda == 0) {
-             _x = 31; _y = 21; _t = 5; _gp_gen = "%"; print_str ();
+             _x = 31; _y = 21; _t = 5; _gp_gen =  (unsigned char *)("%"); print_str ();
         } else {
-            _x = 31; _y = 21 - rda; _t = 5; _gp_gen = "\""; print_str ();
+            _x = 31; _y = 21 - rda; _t = 5; _gp_gen =  (unsigned char *)("\""); print_str ();
         }
     }
 }
@@ -136,7 +136,10 @@ void start_dead(void) {
 }
 
 void restart_level(void) {
-    n_pant = SCR_INICIO + slevel;
+    if (n_pant != 0) {
+        n_pant = SCR_INICIO + slevel;
+    }
+    
     gpx = PLAYER_INI_X << 4; p_x = gpx << 6;
     gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
     if (n_pant == 0) {
@@ -165,18 +168,48 @@ void draw_player_lives(void) {
 }
 
 void save_object(void) {
-    objects[objects_index].gpit =  p_tx + (p_ty * 15);
+    objects[objects_index].x =  p_tx;
+    objects[objects_index].y =  p_ty;
     objects[objects_index].n_pant = n_pant;
     objects_index++;
 }
 
-void get_object(unsigned char points) {
-    points += points;
+void get_object(unsigned int p) {
+    points = points + p;
     _x = p_tx; _y = p_ty; _t = 1; _n = 0; update_tile();
    save_object();
+   print_points();
+
+}
+
+void print_points() {    
+    _n = 5;
+    rdc = (points / 10000);
+    _x = 26; _y = 0; _t = rdc; print_number_wan ();
+    rdc = (points / 1000) % 10;
+    _x = 27; _y = 0; _t = rdc; print_number_wan ();
+    rdc = (points / 100) % 10;
+    _x = 28; _y = 0; _t = rdc; print_number_wan ();
+    rdc = (points / 10) % 10;
+    _x = 29; _y = 0; _t = rdc; print_number_wan ();
+    rdc = points % 10;
+    _x = 30; _y = 0; _t = rdc; print_number_wan ();
+
 }
 
 void draw_player_sublives(void) {
-    _x = 1; _y = 0; _t = 7; _gp_gen = "#"; print_str ();
-    _x = 2; _y = 0; _t = 7; _gp_gen = "#"; print_str ();
+    _x = 1; _y = 0; _t = 7; _gp_gen =  (unsigned char *)("#"); print_str ();
+    _x = 2; _y = 0; _t = 7; _gp_gen =  (unsigned char *)("#"); print_str ();
+}
+
+void clear_gamezone() {
+	for (rda = 0; rda < 10; rda++) {
+		for (rdb = 0; rdb < 15; rdb ++) {
+			_x = rdb;
+			_y = rda;
+			_t = 0;
+			draw_invalidate_coloured_tile_gamearea ();
+			sp_UpdateNow ();
+		}
+	}
 }

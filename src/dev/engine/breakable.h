@@ -14,7 +14,7 @@ void break_wall (void) {
 		#endif
 		#include "my/ci/on_wall_hit.h"
 	} else {
-		_n = _t = 0; update_tile ();
+		//_n = _t = 0; update_tile ();
 		#ifdef MODE_128K
 			gpit = SFX_BREAKABLE_BREAK;
 		#else

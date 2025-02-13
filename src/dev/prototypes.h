@@ -129,6 +129,8 @@ void draw_player_lives(void);
 void move_boss(signed char increase_x, signed char increase_y, unsigned char tile, unsigned char offset);
 void start_dead(void);
 void draw_player_sublives(void);
+void print_points(void) ;
+void clear_gamezone() ;
 
 // savegame.h
 void mem_save (void);
@@ -143,7 +145,7 @@ void tilanims_do (void);
 void tilanims_reset (void);
 
 void save_object(void);
-void get_object(unsigned char points);
+void get_object(unsigned int p);
 
 
 #ifdef MODE_128K

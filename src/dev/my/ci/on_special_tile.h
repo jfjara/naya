@@ -19,4 +19,13 @@ if (_t == 34 || _t == 37) {
 if (_t == 35) {
     get_object(100);
 }
-
+if (_t == 36) {
+    get_object(100); //invencibility
+    p_estado = EST_PARP;
+	p_ct_estado = 200;
+}
+if (_t == 38) {
+    get_object(100);
+    timer_t = timer_t + 15;
+    if (timer_t > 99) timer_t = 99;
+}

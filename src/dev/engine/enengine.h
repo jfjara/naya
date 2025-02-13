@@ -124,9 +124,28 @@ void enems_load (void) {
 	enoffs = n_pant * MAX_ENEMS;
 	
 	for (enit = 0; enit < MAX_ENEMS; ++ enit) {
-		en_an_frame [enit] = 0;
-		en_an_state [enit] = 0;
-		en_an_count [enit] = 3;
+		// en_an_frame [enit] = 0;
+		// en_an_state [enit] = 0;
+		// en_an_count [enit] = 3;
+		#asm
+				ld  bc, (_enit)
+				ld  b, 0
+
+				ld  hl, _en_an_frame 
+				add hl, bc
+				xor a
+				ld  (hl), a
+
+				ld  hl, _en_an_state
+				add hl, bc
+				ld  (hl), a
+
+				ld  hl, _en_an_count
+				add hl, bc
+				ld  a, 3
+				ld  (hl), a
+		#endasm
+
 		enoffsmasi = enoffs + enit;
 
 		#ifdef RESPAWN_ON_ENTER
@@ -161,7 +180,19 @@ void enems_load (void) {
 					#else
 						en_an_base_frame [enit] = ORTHOSHOOTERS_BASE_CELL << 1;
 					#endif
-					en_an_state [enit] = malotes [enoffsmasi].t >> 6;
+					//en_an_state [enit] = malotes [enoffsmasi].t >> 6;
+					#asm
+							call calc_baddies_pointer 		// HL -> malotes [enoffsmasi]
+							ld  de, 8 						// .t is offset 8 in struct
+							add hl, de 						// HL -> malotes [enoffsmasi].t
+
+							ld  a, (hl)
+							and 0xc0 						// leave only ->XX000000
+
+							ld  hl, _en_an_state
+							add hl, bc 
+							ld  (hl), a
+					#endasm		
 					break;
 			#endif
 
@@ -195,8 +226,21 @@ void enems_load (void) {
 }
 
 void enems_kill (void) {
-	if (_en_t != 7) _en_t |= 16;
-	++ p_killed;
+	// if (_en_t != 7) _en_t |= 16;
+	// ++ p_killed;
+
+	#asm
+		ld 	a, (__en_t)
+		cp 	7
+		jr 	z, enems_kill_noflag
+
+		or 	16
+		ld 	(__en_t), a
+
+		.enems_kill_noflag
+			ld 	hl, _p_killed
+			inc (hl)
+	#endasm
 
 	#ifdef BODY_COUNT_ON
 		flags [BODY_COUNT_ON] = p_killed;
@@ -524,7 +568,7 @@ void enems_move (void) {
 								#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
 									if (_en_t != 4) {
 										if (_en_t == 5) {
-											_en_life_boss--;
+											--_en_life_boss;
 											b_aux = 8;
 											if (_en_life_boss == 0) {
 												boss_action = 10;  //muerte
@@ -542,6 +586,7 @@ void enems_move (void) {
 								if (_en_life == 0 || _en_life_boss == 0) {
 									enems_draw_current ();
 									sp_UpdateNow ();
+									active = 0;
 									#ifdef MODE_128K
 										en_an_state [enit] = GENERAL_DYING;
 										en_an_count [enit] = 12;
@@ -549,13 +594,14 @@ void enems_move (void) {
 									#else															
 										beep_fx (5);
 										en_an_next_frame [enit] = sprite_18_a;
+										
 									#endif	
 									
 									#ifdef ENABLE_PURSUERS
 										enems_pursuers_init ();
 									#endif
 
-									enems_kill ();		
+									enems_kill ();	
 										
 								}
 
@@ -570,6 +616,8 @@ void enems_move (void) {
 
 				}
 			#endif
+
+			
 
 			#include "my/ci/enems_extra_actions.h"
 		} 

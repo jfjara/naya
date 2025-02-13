@@ -94,8 +94,11 @@
 	#endif
 
 	faps = 0;
+	dead_animation = 0;
 
 	o_pant = 0xff;
+
+	print_points();
 	while (playing) {
 		#asm
 			; Makes debugging easier
@@ -122,6 +125,33 @@
 		if (faps == 24) {
 			animate_tiles();
 			faps = 0;
+		}
+
+		if (dead_animation == 1) {
+			fire_count_animation--;
+		}
+		if (dead_animation == 1 && fire_count_animation == 0) {
+			dead_animation = 0;
+			if (p_total_lifes == 0 && p_life == 0) {
+				playing = 0;  //el game over debe de salir sl acabar la animacion
+				dead_animation = 0;
+				fire_count_animation = 0;
+				do_not_move = 0;
+				clear_sprites();
+			} else {
+				p_life = 2;
+				p_killme = 0;
+				o_pant = 99;
+				clear_sprites();
+				clear_gamezone();
+				blackout_area();
+				draw_level_screen();
+				restart_level();
+				invalidate_viewport();
+				draw_player_sublives();
+				draw_player_lives();
+				continue;
+			}
 		}
 
 
@@ -196,31 +226,14 @@
 		#endif
 
 		if (p_killme) {
-			_x = 7; _y = 0; _t = p_life; _n = 5; print_number_wan();
 			if (p_total_lifes > 0 && p_life > 0) {
 				player_kill (p_killme);
 				#include "my/ci/on_player_killed.h"
 			}
-			if (p_total_lifes == 0 && p_life == 0) {
-				playing = 0;  //el game over debe de salir sl acabar la animacion
-			}
+			
 		}
 
-		if (dead_animation == 1) {
-			fire_count_animation--;
-		}
-		if (dead_animation == 1 && fire_count_animation == 0) {
-			dead_animation = 0;
-			p_life = 2;
-			p_killme = 0;
-			o_pant = 99;
-			draw_level_screen();
-			restart_level();
-			invalidate_viewport();
-			draw_player_sublives();
-    		draw_player_lives();
-			continue;
-		}
+		// aqui estaba la animacion de muerte
 
 		#ifdef PLAYER_CAN_FIRE
 			// Move bullets 			

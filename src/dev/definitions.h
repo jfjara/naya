@@ -258,7 +258,7 @@ unsigned char objs_old, keys_old, life_old, killed_old;
 #if defined TIMER_ENABLE && TIMER_X != 99
 	unsigned char timer_old;
 #endif
-unsigned char *level_str = "LEVEL 0X";
+unsigned char *level_str = "LEVEL 0X - 0X";
 #ifdef COMPRESSED_LEVELS
 	
 	unsigned char silent_level = 0;
@@ -324,9 +324,9 @@ unsigned char isrc;
 
 typedef struct 
 {
-	unsigned char n_pant, gpit;
+	unsigned char n_pant, x, y;
 } OBJECT;
 
-OBJECT objects[50];
+OBJECT objects[80];
 unsigned char objects_index;
 unsigned char dead_animation = 0;

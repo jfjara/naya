@@ -128,3 +128,14 @@
 
 		._draw_scr_loop_done			
 	#endasm	
+
+	for (rdd = 0; rdd < objects_index; rdd++) {
+		if (n_pant == objects[rdd].n_pant) {
+			_t = 1; _n = 0;
+			_x = objects[rdd].x; _y = objects[rdd].y;
+			update_tile();
+			map_attr [gpit] = 0;
+			map_buff [gpit] = 1;
+		
+		}
+	}
