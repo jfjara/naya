@@ -7,7 +7,7 @@
 // I. General configuration
 // ============================================================================
 
-//#define MODE_128K 						// Read the docs!
+#define MODE_128K 						// Read the docs!
 //#define MIN_FAPS_PER_FRAME		2		// Limits the max # of fps to 50/N
 //#define USE_ARKOS_PLAYER					// Use Arkos instead of Wyz player for 128k Music
 //#define ARKOS_SFX_CHANNEL	0				// SFX Channel (0-2)
@@ -27,9 +27,9 @@
 #define PLAYER_NUM_OBJETOS			25		// Objects to get to finish game
 #define PLAYER_LIFE 				2		// Max and starting life gauge.
 #define PLAYER_REFILL				10		// Life recharge
-//#define COMPRESSED_LEVELS 				// use levels.h instead of mapa.h and enems.h (!)
+#define COMPRESSED_LEVELS 				// use levels.h instead of mapa.h and enems.h (!)
 //#define PER_LEVEL_SPRITESET 				// use a different spriteset for each level in 48K
-//#define MAX_LEVELS				4		// # of compressed levels
+#define MAX_LEVELS				5		// # of compressed levels
 //#define REFILL_ME 						// If defined, refill player on each level
 //#define NO_RESET_STATS 						// If defined, player stats are not reset per level
 

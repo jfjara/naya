@@ -22,7 +22,17 @@ if [%1]==[justscripts] goto :compile
 echo Convirtiendo mapa
 rem ..\utils\mapcnv.exe ..\map\mapa.map assets\mapa.h 3 10 15 10 99 > nul
 rem ..\utils\rle62map_sp.exe in=..\map\mapa.map mk1h=assets\mapa.h out=mapa size=2,2 tlock=99 mk1locks > nul
-..\utils\rle62map_sp.exe in=..\map\mapa.map mk1h=assets\mapa.h out=mapa size=3,10 tlock=99 mk1locks > nul
+rem ..\utils\rle62map_sp.exe in=..\map\mapa.map mk1h=assets\mapa.h out=mapa size=3,10 tlock=99 mk1locks > nul
+
+echo Importando GFX
+..\..\src\utils\ts2bin.exe ..\gfx\font.png notiles font.bin 7 >nul
+
+..\..\src\utils\sprcnvbin.exe ..\gfx\sprites_extra.png sprites_extra.bin 1 > nul
+..\..\src\utils\sprcnvbin8.exe ..\gfx\sprites_bullet.png sprites_bullet.bin 1 > nul
+
+..\..\src\utils\png2scr.exe ..\gfx\loading.png loading.bin > nul
+
+if [%1]==[justassets] goto :end
 
 echo Convirtiendo enemigos/hotspots
 ..\utils\ene2h.exe ..\enems\enems.ene assets\enems.h
@@ -76,29 +86,26 @@ rem zcc +zx -vn mk1.c -o %game%.bin -lsplib2_mk2.lib -zorg=24000 > nul
 
 rem *** Tipo de cargador ***
 
-echo Construyendo cinta
-rem cambia LOADER por el nombre que quieres que salga en Program:
-..\utils\bas2tap -a10 -sLOADER loader\loader.bas loader.tap > nul
-..\utils\bin2tap -o screen.tap -a 16384 loading.bin > nul
-..\utils\bin2tap -o main.tap -a 24000 %game%.bin > nul
-copy /b loader.tap + screen.tap + main.tap %game%.tap > nul
-rem echo Construyendo cinta 128k
-rem ..\utils\imanol.exe ^
-rem in=loader\loaderzx.asm-orig ^
-rem out=loader\loader.asm ^
-rem ram1_length=?..\bin\RAM1.bin ^
-rem ram3_length=?..\bin\RAM3.bin ^
-rem mb_length=?%game%.bin  > nul
+ echo Construyendo cinta
+    ..\..\src\utils\imanol.exe ^
+        in=loader\loaderzx.asm-orig ^
+        out=loader\loader.asm ^
+        ram1_length=?..\bin\RAM1.bin ^
+        ram3_length=?..\bin\RAM3.bin ^
+        ram4_length=?..\bin\RAM4.bin ^
+        ram6_length=?..\bin\RAM6.bin ^
+        mb_length=?%game%.bin  > nul
 
-rem ..\utils\pasmo.exe loader\loader.asm ..\bin\loader.bin loader.txt
+    ..\..\src\utils\pasmo.exe loader\loader.asm ..\bin\loader.bin loader.txt
 
-rem cambia LOADER por el nombre que quieres que salga en Program:
-rem ..\utils\GenTape.exe %game%.tap ^
-rem basic 'LOADER' 10 ..\bin\loader.bin ^
-rem data                loading.bin ^
-rem data                ..\bin\RAM1.bin ^
-rem data                ..\bin\RAM3.bin ^
-rem data                %game%.bin
+    ..\..\src\utils\GenTape.exe %game%.tap ^
+        basic 'GOKU_MAL' 10 ..\bin\loader.bin ^
+        data                loading.bin ^
+        data                ..\bin\RAM1.bin ^
+        data                ..\bin\RAM3.bin ^
+        data                ..\bin\RAM4.bin ^
+        data                ..\bin\RAM6.bin ^
+        data                %game%.bin
 
 if [%1]==[justcompile] goto :end
 if [%1]==[noclean] goto :end
