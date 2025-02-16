@@ -59,7 +59,7 @@ if (stage_clear_animation == 1) {
         gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
 
         for (rda = 0; rda < 80; rda++) {
-			objects[rda].n_pant = 99; objects[rda].x = objects[rda].y = 255;
+			objects[rda].n_pant = 99; objects[rda].gpit = objects[rda].x = objects[rda].y = 255;
 		}
         
         if (slevel == 3) {

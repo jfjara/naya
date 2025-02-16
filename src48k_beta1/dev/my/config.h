@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // Config.h
 
@@ -14,11 +14,13 @@
 //#define VENG_SELECTOR 					// Very advanced!
 #define USE_MAP_CUSTOM_DECODER
 
+//#define USE_ZX0	 							// Use ZX0 rather than WYZ to compress stuff
+
 // In this section we define map dimensions, initial and authomatic ending conditions, etc.
 
 #define MAP_W						3		//
 #define MAP_H						10		// Map dimensions in screens
-#define SCR_INICIO					27		// Initial screen
+#define SCR_INICIO					0		// Initial screen
 #define PLAYER_INI_X				2		//
 #define PLAYER_INI_Y				8		// Initial tile coordinates
 //#define SCR_FIN 					99		// Last screen. 99 = deactivated.
@@ -47,6 +49,7 @@
 											// Comment both for normal 16x16 bounding box
 #define BOUNDING_BOX_8_BOTTOM				// 8x8 aligned to bottom center in 16x16
 //#define BOUNDING_BOX_8_CENTERED			// 8x8 aligned to center in 16x16
+//#define BOUNDING_BOX_12X2_CENTERED 			// 8x2 aligned to center in 16x16
 #define SMALL_COLLISION 					// 8x8 centered collision instead of 12x12
 
 // General directives:
@@ -61,6 +64,7 @@
 //#define OBJECT_COUNT				1		// Defines which FLAG will be used to store the object count.
 //#define REVERSE_OBJECTS_COUNT 			// Counts from PLAYER_NUM_OBJETOS to 0
 //#define DEACTIVATE_EVIL_TILE				// If defined, no killing tiles (behaviour 1) are detected.
+//#define CUSTOM_EVIL_TILE_CHECK			// 
 #define PLAYER_BOUNCES						// If defined, collisions make player bounce
 //#define FULL_BOUNCE 						// If defined, evil tile bounces equal MAX_VX, otherwise v/2
 //#define SLOW_DRAIN						// Works with bounces. Drain is 4 times slower
@@ -70,6 +74,10 @@
 //#define EVERYTHING_IS_A_WALL				// If defined, any tile <> type 0 is a wall, otherwise just 8.
 //#define BODY_COUNT_ON 			2		// If defined, count enemies on flag #
 //#define DISABLE_PLATFORMS 				// Disables platforms in side-view
+//#define CUSTOM_LOCK_CLEAR 				// use `custom_lock_clear.h` to remove a lock from screen
+
+//#define DIE_AND_RESPAWN 					// Remember last safe spot & respawn there
+//#define SAFE_SPOT_ON_ENTERING 			// Comment to have safe spot on landing instead
 
 // Extra enemy types
 // -----------------
@@ -79,6 +87,8 @@
 //#define DEATH_COUNT_ADD 			11 		// Frames to wait = ADD + (rand & AND)
 //#define PURSUERS_MAX_V 			2		// 1, 2, 4.
 //#define PURSUERS_BASE_CELL		3		// If defined, type 7 enemies are always #
+//#define PURSUERS_MAX_V 			2		// 1, 2, 4.
+//#define PURSUERS_DONT_SPAWN_IN_OBSTACLE 	// This
 
 //#define ENABLE_FANTIES					// If defined, Fanties are enabled!
 //#define FANTIES_BASE_CELL 		2		// Base sprite cell (0, 1, 2 or 3)
@@ -114,23 +124,25 @@
 #define PLAYER_CAN_FIRE 					// If defined, shooting engine is enabled.
 //#define PLAYER_CAN_FIRE_FLAG		1		// If defined, player can only fire when flag # is 1
 #define PLAYER_BULLET_SPEED 		8		// Pixels/frame. 
-#define MAX_BULLETS 				1		// Max number of bullets on screen. Be careful!.
-#define PLAYER_BULLET_Y_OFFSET	    4		// vertical offset from the player's top.
-#define PLAYER_BULLET_X_OFFSET	    0		// vertical offset from the player's left/right.
-#define ENEMIES_LIFE_GAUGE		    2		// Amount of shots needed to kill enemies.
+#define MAX_BULLETS 				3		// Max number of bullets on screen. Be careful!.
+#define PLAYER_BULLET_Y_OFFSET		4		// vertical offset from the player's top.
+#define PLAYER_BULLET_X_OFFSET		0		// vertical offset from the player's left/right.
+#define ENEMIES_LIFE_GAUGE			2		// Amount of shots needed to kill enemies.
 #define LIMITED_BULLETS 					// If defined, bullets die after N frames
-#define LB_FRAMES 				    10		// If defined, defines the # of frames bullets live (fixed)
+#define LB_FRAMES 					10		// If defined, defines the # of frames bullets live (fixed)
 //#define LB_FRAMES_FLAG			2		// If defined, defines which flag determines the # of frames
 
 //#define RESPAWN_ON_ENTER					// Enemies respawn when entering screen
 //#define FIRE_MIN_KILLABLE			3		// If defined, only enemies >= N can be killed.
 //#define CAN_FIRE_UP 						// If defined, player can fire upwards and diagonal.
-//#define MAX_AMMO					10		// If defined, ammo is not infinite!
-//#define AMMO_REFILL 				3		// ammo refill, using tile 20 (hotspot #4)
-//#define INITIAL_AMMO				9		// If defined, ammo = X when entering game.
+//#define MAX_AMMO					99		// If defined, ammo is not infinite!
+//#define AMMO_REFILL 				50		// ammo refill, using tile 20 (hotspot #4)
+//#define INITIAL_AMMO				0		// If defined, ammo = X when entering game.
 
 #define BREAKABLE_WALLS 					// Breakable walls
-#define BREAKABLE_WALLS_LIFE	    2			// Amount of hits to break wall
+#define BREAKABLE_WALLS_LIFE		2			// Amount of hits to break wall minus one
+//#define BREAKABLE_WALLS_BREAKING	30 		// If defined, use this tile as "breaking"
+//#define BREAKABLE_WALLS_BROKEN 	0 		// Susbtitute with this
 
 // Scripting
 // ---------
@@ -149,10 +161,10 @@
 // -----
 
 #define TIMER_ENABLE						// Enable timer
-#define TIMER_INITIAL 			    99		// For unscripted games, initial value.
+#define TIMER_INITIAL 				99		// For unscripted games, initial value.
 #define TIMER_REFILL				10		// Timer refill, using tile 21 (hotspot #5)
-#define TIMER_LAPSE				32		// # of frames between decrements
-#define TIMER_START						// If defined, start timer from the beginning
+#define TIMER_LAPSE					32		// # of frames between decrements
+//#define TIMER_START						// If defined, start timer from the beginning
 //#define TIMER_SCRIPT_0					// If defined, timer = 0 runs "ON_TIMER_OFF" in the script
 //#define TIMER_GAMEOVER_0					// If defined, timer = 0 causes "game over"
 #define TIMER_KILL_0						// If defined, timer = 0 causes "one life less".
@@ -189,7 +201,8 @@
 //#define PLAYER_MIN_KILLABLE		3		// Only kill enemies with id >= PLAYER_MIN_KILLABLE
 //#define PLAYER_STEP_SOUND					// Sound while walking. No effect in the BOOTEE engine.
 
-//#define PLAYER_DISABLE_DEFAULT_HENG 		// To disble default horizontal engine (keyrs)
+//#define PLAYER_DISABLE_DEFAULT_HENG 		// To disble default horizontal engine (genital / side)
+//#define PLAYER_DISABLE_DEFAULT_VENG 		// To disble default vertical engine (genital)
 
 // Configure keyboard
 
@@ -274,7 +287,7 @@
 //#define NO_MASKS							// Sprites are rendered using OR instead of masks.
 //#define MASKED_BULLETS					// If needed
 #define PLAYER_CUSTOM_ANIMATION 			// Code your own animation in my/custom_animation.h
-//#define ENABLE_TILANIMS			5		// If defined, animated tiles are enabled.
+//#define ENABLE_TILANIMS			32		// If defined, animated tiles are enabled.
 											// the value especifies first animated tile pair.
 #define PAUSE_ABORT						// Add h=PAUSE, y=ABORT
 //#define GET_X_MORE						// Shows "get X more" when getting an object
@@ -292,7 +305,7 @@
 // IV.1. Vertical movement. Only for side-view.
 
 #define PLAYER_MAX_VY_CAYENDO		512 		// Max falling speed 
-#define PLAYER_G					40		// Gravity acceleration  32
+#define PLAYER_G					40		// Gravity acceleration 
 
 #define PLAYER_VY_INICIAL_SALTO		30 		// Initial junp velocity 
 #define PLAYER_MAX_VY_SALTANDO		320 	// Max jump velocity 

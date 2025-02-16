@@ -1,12 +1,22 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // bullets.h
 
 void bullets_init (void) {
+	/*
 	b_it = 0; while (b_it < MAX_BULLETS) { 
 		bullets_estado [b_it] = 0; ++ b_it;
 	}	
+	*/
+	#asm
+			ld  hl, _bullets_estado
+			ld  de, _bullets_estado + 1
+			ld  bc, MAX_BULLETS - 1
+			xor a
+			ld  (hl), a
+			ldir
+	#endasm	
 }
 
 void bullets_update (void) {
@@ -122,14 +132,14 @@ void bullets_fire (unsigned char who) {
 						ld  hl, __bxo
 						add hl, bc						
 						ld  d, (hl)
-						ld  a, (_gbx)
+						ld  a, (_gpx)
 						add d
 						ld  (__b_x),a
 
 						ld  hl, __byo
 						add hl, bc
 						ld  d, (hl)
-						ld  a, (_gby)
+						ld  a, (_gpy)
 						add d
 						ld  (__b_y),a
 
@@ -144,10 +154,26 @@ void bullets_fire (unsigned char who) {
 						ld  (__b_my),a
 				#endasm
 				
-			#else	
-				_b_y = gby + PLAYER_BULLET_Y_OFFSET;
-				_b_my = 0;
-	
+			#else
+				#ifdef CAN_FIRE_UP
+					if ((pad0 & sp_UP) == 0) {
+						_b_y = gpy;
+						_b_my = -PLAYER_BULLET_SPEED;
+					} else if (!(pad0 & sp_DOWN)) {
+						_b_y = 8 + gpy;
+						_b_my = PLAYER_BULLET_SPEED;	 
+					} else 
+				#endif
+				{
+					_b_y = gpy + PLAYER_BULLET_Y_OFFSET;
+					_b_my = 0;
+				}
+
+
+				#ifdef CAN_FIRE_UP
+					if ((pad0 & sp_LEFT) == 0 || (pad0 & sp_RIGHT) == 0 || ((pad0 & sp_UP) && (pad0 & sp_DOWN))) {
+				#endif
+					
 				#ifdef ENEMIES_CAN_FIRE
 					if (who == 1) {
 						_b_x = (p_facing == 0) ? gbx - 4 : gbx + 12;
@@ -161,6 +187,12 @@ void bullets_fire (unsigned char who) {
 					_b_mx = (p_facing == 0) ? -PLAYER_BULLET_SPEED : PLAYER_BULLET_SPEED;
 				#endif
 				
+				#ifdef CAN_FIRE_UP
+					} else {
+						_b_x = gpx + 4;
+						_b_mx = 0;
+					}
+				#endif
 			#endif
 
 			#ifdef MODE_128K
@@ -235,6 +267,7 @@ void bullets_move (void) {
 					}
 				}
 			#endif
+
 			_x = (_b_x + 3) >> 4;
 			_y = (_b_y + 3) >> 4;
 			rda = attr (_x, _y);

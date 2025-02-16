@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // tilanim.h
 
@@ -22,7 +22,7 @@ void tilanims_add (void) {
 			ld  de, (_max_tilanims)
 			ld  d, 0
 
-			ld  a, (__n)			
+			ld  a, (_rda)			
 			ld  hl, _tilanims_xy
 			add hl, de
 			ld  (hl), a

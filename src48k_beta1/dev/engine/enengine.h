@@ -1,16 +1,63 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // enengine.h
 
-unsigned char *zombie_cells [] = {
-	sprite_8_a, sprite_9_a, sprite_16_a, extra_sprite_17_a
-};
+#asm
+	.calc_baddies_pointer
+		// Point HL to baddies [enoffsmasi]. The struct is 9 or 10 bytes long
+		// so this is baddies + enoffsmasi*(9|10) depending on PLAYER_CAN_FIRE
+		ld 	hl, (_enoffsmasi)
+		// ld  h, 0 	// Now enoffsmasi is 16 bits
+
+		#if defined PLAYER_CAN_FIRE || defined COMPRESSED_LEVELS
+			add hl, hl 				// x2
+			ld  d, h
+			ld  e, l 				// DE = x2
+			add hl, hl 				// x4
+			add hl, hl 				// x8
+
+			add hl, de 				// HL = x8 + x2 = x10
+		#else
+			ld  d, h
+			ld  e, l 				// DE = x1
+			add hl, hl 				// x2
+			add hl, hl 				// x4
+			add hl, hl 				// x8
+
+			add hl, de 				// HL = x8 + x1 = x9
+		#endif
+
+		ld  de, _malotes
+		add hl, de
+
+		ret
+#endasm
 
 #ifdef ENABLE_PURSUERS
 	void enems_pursuers_init (void) {
+		/*
 		en_an_alive [enit] = 0;
 		en_an_dead_row [enit] = DEATH_COUNT_ADD + (rand () & DEATH_COUNT_AND);
+		*/
+		#asm
+				call _rand 		// Will trash all registers so do it first
+				ld   d, l 		// d = rand ()
+
+				ld  bc, (_enit)
+				ld  b, 0
+				ld  hl, _en_an_alive
+				add hl, bc
+				xor a
+				ld  (hl), a
+
+				ld  a, d 
+				and DEATH_COUNT_AND
+				add DEATH_COUNT_ADD 
+				ld  hl, _en_an_dead_row 
+				add hl, bc 
+				ld  (hl), a
+		#endasm
 	}
 #endif
 
@@ -30,11 +77,8 @@ unsigned char *zombie_cells [] = {
 #endif
 
 void enems_draw_current (void) {
-
-	
 	_en_x = malotes [enoffsmasi].x;
 	_en_y = malotes [enoffsmasi].y;
-
 	
 	#asm
 		; enter: IX = sprite structure address 
@@ -127,15 +171,15 @@ void enems_draw_current (void) {
 }
 
 void enems_load (void) {
-	
 	// Movemos y cambiamos a los enemigos según el tipo que tengan
 	enoffs = n_pant * MAX_ENEMS;
 	
 	for (enit = 0; enit < MAX_ENEMS; ++ enit) {
-
-		// en_an_frame [enit] = 0;
-		// en_an_state [enit] = 0;
-		// en_an_count [enit] = 3;
+		/*
+		en_an_frame [enit] = 0;
+		en_an_state [enit] = 0;
+		en_an_count [enit] = 3;
+		*/
 		#asm
 				ld  bc, (_enit)
 				ld  b, 0
@@ -155,7 +199,7 @@ void enems_load (void) {
 				ld  (hl), a
 		#endasm
 
-		enoffsmasi = enoffs + enit;
+		enoffsmasi = enoffs + enit;				
 
 		#ifdef RESPAWN_ON_ENTER
 			// Back to life!
@@ -201,7 +245,7 @@ void enems_load (void) {
 							ld  hl, _en_an_state
 							add hl, bc 
 							ld  (hl), a
-					#endasm		
+					#endasm					
 					break;
 			#endif
 
@@ -235,19 +279,21 @@ void enems_load (void) {
 }
 
 void enems_kill (void) {
-	// if (_en_t != 7) _en_t |= 16;
-	// ++ p_killed;
+	/*
+	if (_en_t != 7) _en_t |= 16;
+	++ p_killed;
+	*/
 
-	#asm
-		ld 	a, (__en_t)
-		cp 	7
-		jr 	z, enems_kill_noflag
+	#asm 
+			ld  a, (__en_t)
+			cp  7
+			jr  z, enems_kill_noflag
 
-		or 	16
-		ld 	(__en_t), a
+			or  16
+			ld  (__en_t), a
 
 		.enems_kill_noflag
-			ld 	hl, _p_killed
+			ld  hl, _p_killed
 			inc (hl)
 	#endasm
 
@@ -263,11 +309,10 @@ void enems_kill (void) {
 }
 
 void enems_move (void) {
-	
 	tocado = p_gotten = ptgmx = ptgmy = 0;
 
 	for (enit = 0; enit < MAX_ENEMS; enit ++) {
-
+		
 		active = 0;
 		enoffsmasi = enoffs + enit;
 
@@ -276,31 +321,8 @@ void enems_move (void) {
 		#asm
 				// Those values are stored in this order:
 				// x, y, x1, y1, x2, y2, mx, my, t[, life]
-				// Point HL to baddies [enoffsmasi]. The struct is 9 or 10 bytes long
-				// so this is baddies + enoffsmasi*(9|10) depending on PLAYER_CAN_FIRE
-				ld 	hl, (_enoffsmasi)
-				ld  h, 0
 
-			#if defined PLAYER_CAN_FIRE || defined COMPRESSED_LEVELS
-				add hl, hl 				// x2
-				ld  d, h
-				ld  e, l 				// DE = x2
-				add hl, hl 				// x4
-				add hl, hl 				// x8
-
-				add hl, de 				// HL = x8 + x2 = x10
-			#else
-				ld  d, h
-				ld  e, l 				// DE = x1
-				add hl, hl 				// x2
-				add hl, hl 				// x4
-				add hl, hl 				// x8
-
-				add hl, de 				// HL = x8 + x1 = x9
-			#endif
-
-				ld  de, _malotes
-				add hl, de
+				call calc_baddies_pointer			// Needs enoffsmasi, trashes DE, returns HL
 
 				ld  (__baddies_pointer), hl 		// Save address for later
 
@@ -354,10 +376,11 @@ void enems_move (void) {
 		#endif
 		
 		#ifdef MODE_128K
-			if (en_an_state [enit] == GENERAL_DYING) {
+			if (en_an_state [enit] & GENERAL_DYING) {
 				-- en_an_count [enit];
 				if (en_an_count [enit] == 0) {
-					en_an_state [enit] = 0;
+					//en_an_state [enit] = 0;
+					en_an_state [enit] &= ~GENERAL_DYING;
 					en_an_next_frame [enit] = sprite_18_a;
 					continue;
 				}
@@ -365,12 +388,44 @@ void enems_move (void) {
 		#endif
 
 		#ifndef PLAYER_GENITAL
+			// if (gpx + W >= _en_x && _en_x + W >= gpx) pregotten = 1; else pregotten = 0;
+			#asm
+				._pregotten_calc
+					ld  a, (__en_x)
+					ld  c, a 
+					ld  a, (_gpx)
 			#if defined (BOUNDING_BOX_8_CENTERED) || defined (BOUNDING_BOX_8_BOTTOM)
-				pregotten = (gpx + 12 >= _en_x && gpx <= _en_x + 12);
+						add 12
 			#else
-				pregotten = (gpx + 15 >= _en_x && gpx <= _en_x + 15);
+						add 15
+				#endif
+					cp  c 
+					jr  c, _pregotten_reset 
+
+					ld  a, (_gpx) 
+					ld  c, a 
+					ld  a, (__en_x)
+				#if defined (BOUNDING_BOX_8_CENTERED) || defined (BOUNDING_BOX_8_BOTTOM)
+						add 12
+				#else
+						add 15
 			#endif
+					cp  c
+					jr  c, _pregotten_reset
+
+				._pregotten_set
+					ld  a, 1
+					jr  _pregotten_write
+
+				._pregotten_reset
+					xor a
+
+				._pregotten_write
+					ld (_pregotten), a
+			#endasm
 		#endif
+
+		#include "my/ci/enems_before_move.h"
 
 		switch (rdt) {
 			case 1:
@@ -399,11 +454,12 @@ void enems_move (void) {
 					break;	
 			#endif
 			#include "my/ci/enems_move.h"
-			/*
-			default:
-				if (en_an_state [enit] != GENERAL_DYING) en_an_next_frame [enit] = sprite_18_a;
-			*/
+
 		}
+		
+		#asm
+			.enems_just_moved
+		#endasm
 		
 		if (active) {			
 			// Animate
@@ -481,7 +537,12 @@ void enems_move (void) {
 							if (gpy + 17 >= _en_y && gpy + 8 <= _en_y) {
 								p_gotten = 1;
 								ptgmx = _en_mx << 6;
-								gpy = (_en_y - 16); p_y = gpy << 6;
+								#ifdef PLAYER_CUMULATIVE_JUMP
+									if (p_vy > 0) 
+								#endif
+								{
+									gpy = (_en_y - 16); p_y = gpy << 6;
+								}
 							}
 						}
 
@@ -492,7 +553,12 @@ void enems_move (void) {
 						) {
 							p_gotten = 1;
 							ptgmy = _en_my << 6;
-							gpy = (_en_y - 16); p_y = gpy << 6;						
+							#ifdef PLAYER_CUMULATIVE_JUMP
+								if (p_vy > 0) 
+							#endif
+							{
+								gpy = (_en_y - 16); p_y = gpy << 6;					
+							}
 						}
 
 					}
@@ -502,10 +568,35 @@ void enems_move (void) {
 				#include "my/ci/custom_enems_player_collision.h"
 			
 				cx2 = _en_x; cy2 = _en_y;
-				
 				if (!tocado && collide () && p_estado == EST_NORMAL) {
+					#ifdef PLAYER_STEPS_ON_ENEMIES
+					// Step over enemy		
+						#ifdef PLAYER_CAN_STEP_ON_FLAG
+							if (flags [PLAYER_CAN_STEP_ON_FLAG] != 0 && 
+								gpy < _en_y - 2 && p_vy >= 0 && rdt >= PLAYER_MIN_KILLABLE)
+						#else
+							if (gpy < _en_y - 2 && p_vy >= 0 && rdt >= PLAYER_MIN_KILLABLE)
+						#endif				
+						{
+							#ifdef MODE_128K
+								PLAY_SOUND (SFX_KILL_ENEMY_STEP);										
+								en_an_state [enit] |= GENERAL_DYING;
+								en_an_count [enit] = 12;
+								en_an_next_frame [enit] = sprite_17_a;
+								p_vy = -256;
+							#else
+								en_an_next_frame [enit] = sprite_17_a;
+								enems_draw_current ();
+								sp_UpdateNow ();
+
+								beep_fx (5);
+								en_an_next_frame [enit] = sprite_18_a;								
+							#endif					
+
+							enems_kill ();
+						} else
+					#endif
 					{
-						 
 						tocado = 1;
 						#if defined(SLOW_DRAIN) && defined(PLAYER_BOUNCES)
 							if (!lasttimehit || ((maincounter & 3) == 0)) {
@@ -561,11 +652,11 @@ void enems_move (void) {
 					if (rdt >= FIRE_MIN_KILLABLE)
 				#endif				
 				{
+					/*
 					for (gpjt = 0; gpjt < MAX_BULLETS; gpjt ++) {
 						if (bullets_estado [gpjt] == 1) {
 							blx = bullets_x [gpjt] + 3; 
 							bly = bullets_y [gpjt] + 3;
-							
 							if (blx >= _en_x && blx <= _en_x + 15 && bly >= _en_y && bly <= _en_y + 15) {
 								#ifdef ENABLE_FANTIES
 									if (_en_t == 6) {
@@ -577,44 +668,28 @@ void enems_move (void) {
 								en_an_next_frame [enit] = sprite_17_a;
 								bullets_estado [gpjt] = 0;
 								#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
-									if (_en_t != 4) {
-										if (_en_t == 5) {
-											--_en_life_boss;
-											b_aux = 8;
-											if (_en_life_boss == 0) {
-												boss_action = 10;  //muerte
-												boss_1_counter = 16;
-											}
-											draw_sub_boss_life();
-										} else {
-											-- _en_life;
-										}
-									} 
+									if (_en_t != 4) -- _en_life;
 								#else
 									-- _en_life;
 								#endif
-
-								if (_en_life == 0 || _en_life_boss == 0) {
-									
+								
+								if (_en_life == 0) {
 									enems_draw_current ();
 									sp_UpdateNow ();
-									active = 0;
 									#ifdef MODE_128K
-										en_an_state [enit] = GENERAL_DYING;
+										en_an_state [enit] |= GENERAL_DYING;
 										en_an_count [enit] = 12;
 										PLAY_SOUND (SFX_KILL_ENEMY_SHOOT);
 									#else															
 										beep_fx (5);
 										en_an_next_frame [enit] = sprite_18_a;
-										
 									#endif	
 									
 									#ifdef ENABLE_PURSUERS
 										enems_pursuers_init ();
 									#endif
 
-									enems_kill ();	
-										
+									enems_kill ();					
 								}
 
 								#ifdef MODE_128K
@@ -625,11 +700,152 @@ void enems_move (void) {
 							}
 						}
 					}
+					*/
+					#asm
+							ld  a, MAX_BULLETS
+
+						.enems_collide_bullets
+							dec a
+							ld  (_gpjt), a 
+
+							ld  b, 0
+							ld  c, a
+
+							ld  hl, _bullets_estado
+							add hl, bc 
+							ld  a, (hl)
+							dec a
+							jp  nz, enems_collide_bullets_next
+
+							// blx = bullets_x [gpjt] + 3; 
+							// bly = bullets_y [gpjt] + 3;
+
+							ld  hl, _bullets_x
+							add hl, bc 
+							ld  a, (hl)
+							add 3
+							ld  (_blx), a
+
+							ld  hl, _bullets_y
+							add hl, bc 
+							ld  a, (hl)
+							add 3
+							ld  (_bly), a
+
+							// if (blx >= _en_x && blx <= _en_x + 15 && bly >= _en_y && bly <= _en_y + 15) {
+							// blx >= _en_x
+							ld  a, (__en_x)
+							ld  d, a
+							ld  a, (_blx)
+							cp  d
+							jp  c, enems_collide_bullets_next
+
+							// (_en_x + 15) >= blx
+							ld  a, (_blx)
+							ld  d, a
+							ld  a, (__en_x)
+							add 15
+							cp  d
+							jp  c, enems_collide_bullets_next
+
+							// bly >= _en_y
+							ld  a, (__en_y)
+							ld  d, a
+							ld  a, (_bly)
+							cp  d
+							jp  c, enems_collide_bullets_next
+
+							// (_en_y + 15) >= bly
+							ld  a, (_bly)
+							ld  d, a
+							ld  a, (__en_y)
+							add 15
+							cp  d
+							jp  c, enems_collide_bullets_next
+
+							// _en_x = _en_cx;
+							// _en_y = _en_cy;
+							ld  a, (__en_cx)
+							ld  (__en_x), a
+							ld  a, (__en_cy)
+							ld  (__en_y), a
+
+							// bullets_estado [gpjt] = 0;
+							ld  hl, _bullets_estado
+							add hl, bc
+							xor a
+							ld  (hl), a
+					#endasm
+
+					#ifdef ENABLE_FANTIES
+						if (_en_t == 6) {
+							en_an_vx [enit] += addsign (bullets_mx [gpjt], 128);
+						}
+					#endif
+
+					en_an_next_frame [enit] = sprite_17_a;
+
+					#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
+						if (_en_t != 4) {
+							if (_en_t == 5) {
+								--_en_life_boss;
+								b_aux = 8;
+								if (_en_life_boss == 0) {
+									boss_action = 10;  //muerte
+									boss_1_counter = 16;
+								}
+								draw_sub_boss_life();
+							} else {
+								-- _en_life;
+							}
+						} 
+					#else
+						-- _en_life;
+					#endif
+
+					if (_en_life == 0 || _en_life_boss == 0) {
+						enems_draw_current ();
+						sp_UpdateNow ();
+						active = 0;
+	
+						#ifdef MODE_128K
+							en_an_state [enit] |= GENERAL_DYING;
+							en_an_count [enit] = 12;
+							PLAY_SOUND (SFX_KILL_ENEMY_SHOOT);
+						#else															
+							beep_fx (5);
+							en_an_next_frame [enit] = sprite_18_a;
+						#endif	
+	
+						#ifdef ENABLE_PURSUERS
+							enems_pursuers_init ();
+						#endif
+	
+						#asm
+								call _enems_kill
+								jp enems_collide_bullets_next
+								
+							.enems_collide_bullets_sound
+						#endasm
+					}
+					
+
+					#ifdef MODE_128K
+						PLAY_SOUND (SFX_HIT_ENEMY);
+					#else
+						beep_fx (1);
+					#endif
+
+					#asm			
+
+						.enems_collide_bullets_next
+							ld  a, (_gpjt)
+							or  a
+							jp  nz, enems_collide_bullets
+					#endasm
 
 				}
 			#endif
-
-			
 
 			#include "my/ci/enems_extra_actions.h"
 		} 
