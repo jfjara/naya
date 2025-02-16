@@ -11,33 +11,33 @@ typedef struct {
 
 RESOURCE resources [] = {
     { 3, 0xC000 },
-    { 3, 0xCCE2 },
-    { 3, 0xD9BB },
-    { 3, 0xE63C },
-    { 3, 0xF2BA },
+    { 3, 0xCEBB },
+    { 3, 0xDD76 },
+    { 3, 0xEC31 },
     { 4, 0xC000 },
-    { 4, 0xC872 },
-    { 4, 0xD05B },
-    { 4, 0xD7B8 },
-    { 4, 0xDE8E },
-    { 4, 0xE564 },
-    { 4, 0xEBDC },
-    { 4, 0xF24C },
-    { 4, 0xF8B9 },
+    { 4, 0xCEBB },
+    { 4, 0xD72D },
+    { 4, 0xDF16 },
+    { 4, 0xE673 },
+    { 4, 0xED49 },
+    { 4, 0xF41F },
     { 6, 0xC000 },
-    { 6, 0xC608 },
-    { 6, 0xCC02 },
-    { 6, 0xD06D },
-    { 4, 0xFF0D },
-    { 3, 0xFCF5 },
-    { 3, 0xFDAE }
+    { 6, 0xC670 },
+    { 6, 0xCCDD },
+    { 6, 0xD331 },
+    { 6, 0xD939 },
+    { 3, 0xFAEC },
+    { 4, 0xFA97 },
+    { 4, 0xFDA6 },
+    { 4, 0xFE85 },
+    { 4, 0xFF3E }
 };
 
-#define LEVEL2C_BIN                     0
+#define LEVEL0C_BIN                     0
 #define LEVEL1C_BIN                     1
-#define LEVEL0C_BIN                     2
-#define LEVEL4C_BIN                     3
-#define LEVEL3C_BIN                     4
+#define LEVEL2C_BIN                     2
+#define LEVEL3C_BIN                     3
+#define LEVEL4C_BIN                     4
 #define ZONEA_BIN                       5
 #define ZONEB_BIN                       6
 #define INTRO7_BIN                      7

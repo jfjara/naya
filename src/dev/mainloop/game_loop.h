@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // game_loop.h - Da game loop.
 
@@ -7,6 +7,7 @@
 		; Makes debugging easier
 		._game_loop_init
 	#endasm
+
 	p_total_lifes = 3;
 	playing = 1;
 	player_init ();
@@ -70,7 +71,7 @@
 	#ifdef MAX_AMMO 	
 		ammo_old = 0xff;
 	#endif
-	#if defined(TIMER_ENABLE) && defined(PLAYER_SHOW_TIMER)
+	#if defined TIMER_ENABLE && TIMER_X != 99
 		timer_old = 0;
 	#endif
 
@@ -93,12 +94,19 @@
 		display_items ();
 	#endif
 
+	#ifdef DIE_AND_RESPAWN
+		safe_n_pant = n_pant; 
+		safe_gpx = gpx;
+		safe_gpy = gpy;
+	#endif
+
 	faps = 0;
 	dead_animation = 0;
+	timer_on = 1;
 
 	o_pant = 0xff;
-
 	print_points();
+
 	while (playing) {
 		#asm
 			; Makes debugging easier
@@ -118,6 +126,9 @@
 			#include "my/ci/before_entering_screen.h"
 			draw_scr ();
 			o_pant = n_pant;
+			#if defined DIE_AND_RESPAWN && defined PLAYER_GENITAL
+				safe_gpx = gpx; safe_gpy = gpy;
+			#endif
 		}
 
 		faps++;
@@ -154,7 +165,6 @@
 			}
 		}
 
-
 		#ifdef TIMER_ENABLE
 			#if defined(TIMER_SCRIPT_0) && defined(ACTIVATE_SCRIPTING)
 				if (timer_zero) {
@@ -182,6 +192,17 @@
 						timer_t = TIMER_INITIAL;
 					#endif
 					
+					#ifdef MODE_128K
+						p_killme = 7;
+					#else
+						p_killme = 4;
+					#endif
+
+					#ifdef PLAYER_FLICKERS
+						p_estado = EST_PARP;
+						p_ct_estado = 50;
+					#endif
+
 					#if defined(TIMER_WARP_TO_X) && defined(TIMER_WARP_TO_Y)
 						p_x = TIMER_WARP_TO_X << 10;
 						p_y = TIMER_WARP_TO_Y << 10;
@@ -205,35 +226,30 @@
 			}
 		#endif
 
-		#include "mainloop/hud.h"
+		draw_hud ();
 
+	/*
 		maincounter ++;
 		half_life = !half_life;
-
+		*/
+		#asm
+				ld  hl, _maincounter
+				inc (hl)
+				ld  a, (_half_life)
+				xor 1
+				ld  (_half_life), a
+		#endasm
+				
 		// Move player
-
-			player_move ();
+		player_move ();
 		
-			// Move enemies
-			enems_move ();
-		
-
-		
+		// Move enemies
+		enems_move ();
 
 		#ifdef ENABLE_SIMPLE_COCOS
 			// Move simple cocos
 			simple_coco_update ();
 		#endif
-
-		if (p_killme) {
-			if (p_total_lifes > 0 && p_life > 0) {
-				player_kill (p_killme);
-				#include "my/ci/on_player_killed.h"
-			}
-			
-		}
-
-		// aqui estaba la animacion de muerte
 
 		#ifdef PLAYER_CAN_FIRE
 			// Move bullets 			
@@ -288,6 +304,14 @@
 		
 		// Hotspot interaction.
 		hotspots_do ();
+
+		// Kill player
+		if (p_killme) {
+			if (p_total_lifes > 0 && p_life > 0) {
+				player_kill (p_killme);
+				#include "my/ci/on_player_killed.h"
+			}
+		}
 
 		// Scripting related stuff
 		

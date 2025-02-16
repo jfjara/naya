@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // Levels.h
 
@@ -27,10 +27,10 @@
 // Types:
 
 typedef struct {
-	unsigned char map_w, map_h;
-	unsigned char scr_ini, ini_x, ini_y;
-	unsigned char max_objs;
-	unsigned char enems_life;
+	unsigned char map_w, map_h; 			// 0, 1
+	unsigned char scr_ini, ini_x, ini_y; 	// 2, 3, 4
+	unsigned char max_objs; 				// 5
+	unsigned char enems_life; 				// 6
 	unsigned char d01;	// Reserved
 	unsigned char d02;
 	unsigned char d03;
@@ -113,12 +113,7 @@ extern unsigned char sprites [0];
 #endasm
 
 #if defined MODE_128K || defined PER_LEVEL_SPRITESET
-	//#include "assets/sprites-empty.h"
-	#include "assets/sprites.h"
-	const unsigned char *extra_enem_cells [] = {
-		extra_sprite_17_a, extra_sprite_18_a, extra_sprite_19_a, extra_sprite_20_a,
-		extra_sprite_21_a, extra_sprite_22_a, extra_sprite_23_a, extra_sprite_24_a
-	};
+	#include "assets/sprites-empty.h"
 #else
 	#include "assets/sprites.h"
 #endif

@@ -58,18 +58,17 @@ void lunge(unsigned char increase) {
 void play_boss() {
 
     //tipo de boss
-    if (boss == 1) {
-        if (boss_action == 0) {
-            boss_1_lunge--;
-        }
-        if (boss_action == 0 && boss_1_lunge == 0) {
-            boss_action = 1;
-            boss_action_counter = 60;
-            boss_x = 13;
-            boss_y = 8;
-        }
-    }
 
+    if (boss_action == 0) {
+        boss_1_lunge--;
+    }
+    if (boss_action == 0 && boss_1_lunge == 0) {
+        boss_action = 1;
+        boss_action_counter = 60;
+        boss_x = 13;
+        boss_y = 8;
+    }
+    
     //acciones
     if (boss_action == 1) {
         //quitar la cabeza sprite
@@ -103,6 +102,14 @@ void play_boss() {
             stage_clear_animation = 1;
         }
     }   
+
+    _x = 0; _y = 0; _t = boss_esbirros; print_number2 ();
+    
+
+    if (_en_life_boss < 12 && timer_t - 5 < time_create_esbirros) {
+        boss_esbirros = 1;
+        time_create_esbirros = 0;
+    }
 }
 
 void draw_sub_boss_life() {

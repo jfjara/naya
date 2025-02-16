@@ -37,7 +37,7 @@
 	scf
 	ld	a, $ff
 	ld	ix, $C000
-	ld	de, 15969
+	ld	de, 16215
 	call $0556
 	di
 
@@ -49,7 +49,7 @@
 	scf
 	ld	a, $ff
 	ld	ix, $C000
-	ld	de, 16364
+	ld	de, 16369
 	call $0556
 	di
 
@@ -61,7 +61,19 @@
 	scf
 	ld	a, $ff
 	ld	ix, $C000
-	ld	de, 4988
+	ld	de, 7987
+	call $0556
+	di
+
+; RAM7
+	ld	a, $17 		; ROM 1, RAM 7
+	ld	bc, $7ffd
+	out (C), a
+
+	scf
+	ld	a, $ff
+	ld	ix, $C000
+	ld	de, 
 	call $0556
 	di
 
@@ -73,7 +85,7 @@
 	scf
 	ld	a, $ff
 	ld	ix, 24000
-	ld	de, 33775
+	ld	de, 0
 	call $0556
 	di
 	

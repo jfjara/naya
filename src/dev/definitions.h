@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 #asm
 	.vpClipStruct defb VIEWPORT_Y, VIEWPORT_Y + 20, VIEWPORT_X, VIEWPORT_X + 30
@@ -52,7 +52,7 @@ struct sp_SS *sp_moviles [MAX_ENEMS];
 	struct sp_SS *sp_cocos [MAX_ENEMS];
 #endif
 
-unsigned char enoffs;
+unsigned int enoffs;
 
 // Aux
 
@@ -105,7 +105,7 @@ unsigned char p_frame, p_subframe, p_facing;
 unsigned char p_estado;
 unsigned char p_ct_estado;
 unsigned char p_gotten, pregotten;
-unsigned char p_life, p_total_lifes, p_objs, p_keys;
+unsigned char p_life, p_objs, p_keys, p_total_lifes;
 unsigned char p_fuel;
 unsigned char p_killed;
 unsigned char p_disparando;
@@ -114,10 +114,17 @@ unsigned char p_ammo;
 unsigned char p_killme;
 unsigned char p_kill_amt;
 unsigned char p_tx, p_ty;
+unsigned int points = 0;
 #ifdef PLAYER_HAS_JETPAC
 	unsigned char p_jetpac_on;
 #endif
 signed int ptgmx, ptgmy;
+#ifdef DIE_AND_RESPAWN
+	unsigned char safe_n_pant, safe_gpx, safe_gpy;
+	#ifndef PLAYER_GENITAL
+		unsigned char was_possee;
+	#endif
+#endif
 
 unsigned char *spacer = "            ";
 
@@ -179,7 +186,7 @@ unsigned char *_baddies_pointer;
 
 // atributos de la pantalla: Contiene informaci�n
 // sobre qu� tipo de tile hay en cada casilla
-unsigned char map_attr [150];
+unsigned char map_attr [150] @ 23296+16+150;
 unsigned char map_buff [150] @ FREEPOOL;
 // Breakable walls/etc
 #ifdef BREAKABLE_WALLS
@@ -235,7 +242,7 @@ unsigned char possee, hit_v, hit_h, hit, wall_h, wall_v;
 unsigned char gpen_x, gpen_y, gpen_cx, gpen_cy, gpaux;
 unsigned char tocado, active;
 unsigned char gpit, gpjt;
-unsigned char enoffsmasi;
+unsigned int enoffsmasi;
 unsigned char *map_pointer;
 #ifdef PLAYER_CAN_FIRE
 	unsigned char blx, bly;
@@ -258,13 +265,15 @@ unsigned char objs_old, keys_old, life_old, killed_old;
 #if defined TIMER_ENABLE && TIMER_X != 99
 	unsigned char timer_old;
 #endif
-unsigned char *level_str = "LEVEL 0X - 0X";
+
 #ifdef COMPRESSED_LEVELS
-	
+	#ifdef LANG_ES
+		unsigned char *level_str =  "LEVEL 0X - 0X";
+	#else
+	unsigned char *level_str = "LEVEL 0X - 0X";
+	#endif
 	unsigned char silent_level = 0;
 #endif
-
-unsigned int points = 0;
 
 #ifdef GET_X_MORE
 	unsigned char *getxmore = " GET X MORE ";
@@ -281,7 +290,7 @@ unsigned char success;
 unsigned char _x, _y, _n, _t;
 unsigned char cx1, cy1, cx2, cy2, at1, at2;
 unsigned char x0, y0, x1, y1;
-unsigned char ptx1, pty1, ptx2, pty2;
+unsigned char ptx1, pty1, ptx2, pty2, pty2b;
 unsigned char *_gp_gen;
 
 #ifdef ENABLE_TILANIMS
@@ -321,6 +330,7 @@ unsigned char *_gp_gen;
 
 unsigned char isrc;
 
+unsigned char gbx, gby;
 
 typedef struct 
 {

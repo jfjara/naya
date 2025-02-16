@@ -5,6 +5,12 @@
 //  _x = 5; _y = 0; _t = animate_dog; _n = 5; print_number_wan();
 //  _x = 7; _y = 0; _t = _en_life; _n = 5; print_number_wan();
 if (n_pant == 0) { //pantalla del boss 1. Preparar el previo
+    boss = 1;
+} else {
+    boss = 0;
+}
+
+if (boss == 1) {
     draw_boss_life();
     play_boss();
 }
@@ -53,7 +59,7 @@ if (stage_clear_animation == 1) {
         gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
 
         for (rda = 0; rda < 80; rda++) {
-			objects[rda].n_pant = 99; objects[rda].x = objects[rda].y = 255;
+			objects[rda].n_pant = 99; objects[rda].gpit = objects[rda].x = objects[rda].y = 255;
 		}
         
         if (slevel == 3) {

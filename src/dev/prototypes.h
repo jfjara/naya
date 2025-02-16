@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // Autodefs
 
@@ -27,11 +27,12 @@ void break_wall (void);
 // bullets.h
 void bullets_init (void);
 void bullets_update (void);
-void bullets_fire (void);
+void bullets_fire (unsigned char who);
 void bullets_move (void);
 
 // enengine.h
 void enems_init (void);
+void enems_pursuers_init (void);
 void enems_draw_current (void);
 void enems_load (void);
 void enems_kill (void);
@@ -40,7 +41,6 @@ void play_boss();
 void move_boss(signed char increase_x, signed char increase_y, unsigned char tile, unsigned char offset);
 void lunge(unsigned char increase);
 void circle_movement();
-
 
 // general.h
 unsigned char collide (void);
@@ -113,7 +113,6 @@ void draw_invalidate_coloured_tile_gamearea (void);
 void draw_coloured_tile_gamearea (void);
 void draw_decorations (void);
 void update_tile (void);
-void update_tile2 (void);
 void print_number2 (void);
 void draw_objs ();
 void print_str (void);
@@ -144,9 +143,9 @@ void tilanims_add (void);
 void tilanims_do (void);
 void tilanims_reset (void);
 
+//objects
 void save_object(void);
 void get_object(unsigned int p);
-
 
 #ifdef MODE_128K
 // wyzplayer.h / arcos_player.h

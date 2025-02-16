@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // player.h
 
@@ -772,7 +772,7 @@ unsigned char player_move (void) {
 			#ifdef FIRE_TO_PUSH	
 				//if (pushed_any == 0)
 			#endif
-				bullets_fire ();
+				bullets_fire (1);
 			#ifdef FIRE_TO_PUSH	
 				//else pushed_any = 0;
 			#endif

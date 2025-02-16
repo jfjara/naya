@@ -1,5 +1,5 @@
-// MTE MK1 (la Churrera) v5.0
-// Copyleft 2010-2014, 2020 by the Mojon Twins
+// MTE MK1 (la Churrera) v5.10
+// Copyleft 2010-2014, 2020-2023 by the Mojon Twins
 
 // mk1.c
 //#define DEBUG_KEYS
@@ -34,11 +34,11 @@
 */
 
 #ifdef MODE_128K
-	// Versiï¿½n para 128K
+	// Versión para 128K
 	#pragma output STACKPTR=23999
 	#define FREEPOOL 61697
 #else
-	// Versiï¿½n para 48K
+	// Versión para 48K
 	#pragma output STACKPTR=61936
 	#define FREEPOOL 61697
 #endif
@@ -66,6 +66,7 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 // Cosas del juego:
 
 #include "definitions.h"
+#include "mtasmlib.h"
 
 #ifdef ACTIVATE_SCRIPTING
 	#include "my/msc-config.h"
@@ -77,7 +78,12 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	#include "assets/librarian.h"
 #endif
 
-#include "aplib.h"
+#ifdef USE_ZX0
+	#include "zx0.h"
+#else
+	#include "aplib.h"
+#endif
+
 #include "pantallas.h"
 
 #ifdef COMPRESSED_LEVELS
@@ -91,8 +97,6 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	#include "assets/sprites.h"
 	#include "assets/extrasprites.h"
 #endif
-
-
 
 #include "my/ci/extra_vars.h"
 
@@ -119,10 +123,7 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 	#include "my/msc.h"
 #endif
 
-
-
 #include "engine/general.h"
-
 #ifdef BREAKABLE_WALLS
 	#include "engine/breakable.h"
 #endif
@@ -140,17 +141,14 @@ unsigned char AD_FREE [NUMBLOCKS * 15];
 #include "engine/enengine.h"
 #include "engine/hotspots.h"
 
-
-
 #ifdef ENABLE_CHECKPOINTS
 	#include "savegame.h"
 #endif
 
+#include "mainloop/hud.h"
 #include "mainloop.h"
 
 #ifndef MODE_128K
 	// From beepola. Phaser engine by Shiru.
 	#include "sound/music.h"
 #endif
-
-
