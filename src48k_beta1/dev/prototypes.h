@@ -27,7 +27,7 @@ void break_wall (void);
 // bullets.h
 void bullets_init (void);
 void bullets_update (void);
-void bullets_fire (void);
+void bullets_fire (unsigned char who);
 void bullets_move (void);
 
 // enengine.h

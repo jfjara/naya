@@ -110,7 +110,7 @@
 
 // Shooting behaviour
 // ------------------
-
+#define ENEMIES_CAN_FIRE
 #define PLAYER_CAN_FIRE 					// If defined, shooting engine is enabled.
 //#define PLAYER_CAN_FIRE_FLAG		1		// If defined, player can only fire when flag # is 1
 #define PLAYER_BULLET_SPEED 		8		// Pixels/frame. 

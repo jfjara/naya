@@ -17,7 +17,7 @@ typedef struct {
 MALOTE malotes [] = {
 	// Pantalla 0
  	{208, 96, 208, 96, 176, 96, 0, 0, 5},
- 	{0, 0, 0, 0, 0, 0, 0, 0, 0},
+ 	{0, 128, 0, 128, 192, 128, 4, 0, 0},
  	{0, 0, 0, 0, 0, 0, 0, 0, 0},
 
 	// Pantalla 1
@@ -138,7 +138,7 @@ MALOTE malotes [] = {
 	// Pantalla 24
  	{16, 32, 16, 32, 208, 32, 4, 0, 2},
  	{16, 96, 16, 96, 48, 96, 2, 0, 1},
- 	{0, 0, 0, 0, 0, 0, 0, 0, 0},
+ 	{0, 48, 0, 48, 0, 80, 0, 2, 32},
 
 	// Pantalla 25
  	{80, 64, 80, 64, 144, 64, 2, 0, 2},
@@ -152,8 +152,8 @@ MALOTE malotes [] = {
 
 	// Pantalla 27
  	{224, 96, 224, 96, 144, 96, -2, 0, 1},
- 	{0, 0, 0, 0, 0, 0, 0, 0, 0},
- 	{0, 0, 0, 0, 0, 0, 0, 0, 0},
+ 	{0, 0, 0, 0, 0, 32, 0, 2, 9},
+ 	{224, 0, 224, 0, 224, 128, 0, 2, 0},
 
 	// Pantalla 28
  	{160, 80, 160, 80, 64, 80, -4, 0, 1},
@@ -167,13 +167,15 @@ MALOTE malotes [] = {
 
 };
 
-#define N_ENEMS_TYPE_0 31
+#define N_ENEMS_TYPE_0 29
 #define N_ENEMS_TYPE_1 18
 #define N_ENEMS_TYPE_2 31
 #define N_ENEMS_TYPE_3 9
 #define N_ENEMS_TYPE_5 1
 #define N_ENEMS_TYPE_6 0
 #define N_ENEMS_TYPE_7 0
+#define N_ENEMS_TYPE_9 1
+#define N_ENEMS_TYPE_32 1
 
 // This is output the way it worked originally, please modify if you need
 // You may want to add type 5 or 6's below.

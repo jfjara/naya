@@ -3,6 +3,10 @@
 
 // enengine.h
 
+unsigned char *zombie_cells [] = {
+	sprite_8_a, sprite_9_a, sprite_16_a, extra_sprite_17_a
+};
+
 #ifdef ENABLE_PURSUERS
 	void enems_pursuers_init (void) {
 		en_an_alive [enit] = 0;
@@ -26,8 +30,11 @@
 #endif
 
 void enems_draw_current (void) {
+
+	
 	_en_x = malotes [enoffsmasi].x;
 	_en_y = malotes [enoffsmasi].y;
+
 	
 	#asm
 		; enter: IX = sprite structure address 
@@ -120,10 +127,12 @@ void enems_draw_current (void) {
 }
 
 void enems_load (void) {
+	
 	// Movemos y cambiamos a los enemigos según el tipo que tengan
 	enoffs = n_pant * MAX_ENEMS;
 	
 	for (enit = 0; enit < MAX_ENEMS; ++ enit) {
+
 		// en_an_frame [enit] = 0;
 		// en_an_state [enit] = 0;
 		// en_an_count [enit] = 3;
@@ -254,9 +263,11 @@ void enems_kill (void) {
 }
 
 void enems_move (void) {
+	
 	tocado = p_gotten = ptgmx = ptgmy = 0;
 
 	for (enit = 0; enit < MAX_ENEMS; enit ++) {
+
 		active = 0;
 		enoffsmasi = enoffs + enit;
 
@@ -584,6 +595,7 @@ void enems_move (void) {
 								#endif
 
 								if (_en_life == 0 || _en_life_boss == 0) {
+									
 									enems_draw_current ();
 									sp_UpdateNow ();
 									active = 0;

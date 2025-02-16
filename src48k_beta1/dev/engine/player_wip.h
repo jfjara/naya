@@ -772,7 +772,7 @@ unsigned char player_move (void) {
 			#ifdef FIRE_TO_PUSH	
 				//if (pushed_any == 0)
 			#endif
-				bullets_fire ();
+				bullets_fire (1);
 			#ifdef FIRE_TO_PUSH	
 				//else pushed_any = 0;
 			#endif

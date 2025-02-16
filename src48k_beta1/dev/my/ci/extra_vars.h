@@ -19,6 +19,10 @@ unsigned char boss_aux_1, boss_aux_2, diff_x, diff_y;
 unsigned char b_aux = 0;
 unsigned char vector_counter = 0;
 unsigned char boss_esbirros = 0;  // a implementar, cuando le quede 1/4 de vida comienza a salir bichos de apoyo
+unsigned char time_create_esbirros = 99;
+unsigned char ene_direction = 1; // abajo
+
+unsigned char gbx, gby;
 
 POINT boss_vector_path[10] = {
     {0,-2}, {2, -2}, {2, -2}, {2,-2}, {2,0}, 
