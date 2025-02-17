@@ -4,19 +4,19 @@
 // You can change this function. To set level to anything different than 0.
 
 {
-	sp_UpdateNow ();
-	blackout ();
-	
-	#ifdef MODE_128K
-		get_resource (TITLE_BIN, 16384);
-		PLAY_MUSIC (0);
-	#else		
-		#asm
-			ld hl, _s_title
-			ld de, 16384
-			call depack
-		#endasm
-	#endif
+	sp_UpdateNow();
+	blackout();
 
-	select_joyfunc ();
+#ifdef MODE_128K
+	sp_Border(2);
+	get_resource(TITLE_BIN, 16384);
+
+	PLAY_MUSIC(0);
+#else
+#asm
+	ld hl, _s_title ld de, 16384 call depack
+#endasm
+#endif
+
+	select_joyfunc();
 }

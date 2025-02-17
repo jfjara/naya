@@ -129,7 +129,7 @@ void main (void) {
 		#endif
 
 		#include "my/ci/before_game.h"
-
+			
 		#ifdef NO_RESET_STATS
 			p_objs = 0;
 			p_keys = 0;
@@ -172,7 +172,7 @@ void main (void) {
 			
 				prepare_level ();				
 			#endif
-					
+			
 			#ifndef DIRECT_TO_PLAY
 				// Clear screen and show game frame
 				cortina ();
