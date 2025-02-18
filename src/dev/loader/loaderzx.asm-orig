@@ -65,18 +65,6 @@
 	call $0556
 	di
 
-; RAM7
-	ld	a, $17 		; ROM 1, RAM 7
-	ld	bc, $7ffd
-	out (C), a
-
-	scf
-	ld	a, $ff
-	ld	ix, $C000
-	ld	de, %%%ram7_length%%%
-	call $0556
-	di
-
 ; Main binary
 	ld	a, $10 		; ROM 1, RAM 0
 	ld	bc, $7ffd
