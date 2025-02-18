@@ -19,14 +19,12 @@ cd ..\dev
 
 if [%1]==[justscripts] goto :compile
 
-echo Importando GFX 1
+echo Importando GFX
 ..\..\src\utils\ts2bin.exe ..\gfx\font.png notiles font.bin 7 >nul
-echo Importando GFX 2
 ..\..\src\utils\sprcnvbin.exe ..\gfx\sprites_extra.png sprites_extra.bin 1 > nul
-echo Importando GFX 3
 ..\..\src\utils\sprcnvbin8.exe ..\gfx\sprites_bullet.png sprites_bullet.bin 1 > nul
-echo Importando GFX 4
 ..\..\src\utils\png2scr.exe ..\gfx\loading.png loading.bin > nul
+..\..\src\utils\sprcnv2.exe empty assets\sprites.h 24 extra > nul
 
 if [%1]==[justassets] goto :end
 
