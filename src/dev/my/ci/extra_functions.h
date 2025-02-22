@@ -1,25 +1,15 @@
 // MTE MK1 (la Churrera) v5.0
 // Copyleft 2010-2014, 2020 by the Mojon Twins 39 40 41
 
-void update_atribute(unsigned char offset_y, unsigned char tile) {
-    gpit = boss_x + (boss_y + offset_y) * 15;
-    map_attr [gpit] = behs [tile];
-	map_buff [gpit] = tile;
-}
-
 void draw_boss(unsigned char t1, unsigned char t2, unsigned char t3) {
-    _x = boss_x;_y = boss_y;    _t = t1;update_tile ();
-    _x = boss_x;_y = boss_y - 1;_t = t2;update_tile ();
-    _x = boss_x;_y = boss_y - 2;_t = t3;update_tile ();
+    _x = boss_x;_y = boss_y;    _t = t1;draw_invalidate_coloured_tile_gamearea ();
+    _x = boss_x;_y = boss_y - 1;_t = t2;draw_invalidate_coloured_tile_gamearea ();
+    _x = boss_x;_y = boss_y - 2;_t = t3;draw_invalidate_coloured_tile_gamearea ();
 }
 
 void move_boss(signed char increase_x, signed char increase_y, unsigned char tile, unsigned char offset) {
 
     draw_boss(boss_screen_buffer[0], boss_screen_buffer[1], boss_screen_buffer[2]);
-
-    update_atribute(0, boss_screen_buffer[0]);
-    update_atribute(-1, boss_screen_buffer[1]);
-    update_atribute(-2, boss_screen_buffer[2]);
 
     boss_x = boss_x + increase_x;
     boss_y = boss_y + increase_y;
@@ -30,9 +20,10 @@ void move_boss(signed char increase_x, signed char increase_y, unsigned char til
 
     draw_boss(tile + offset + 2, tile + offset + 1, tile);
 
-    update_atribute(0, tile + offset + 2);
-    update_atribute(-1, tile + offset + 1);
-    update_atribute(-2, tile);
+    if (p_tx == boss_x && (p_ty == boss_y || p_ty == boss_y - 1 || p_ty == boss_y - 2) && p_estado == EST_NORMAL) {
+        p_killme = 1;
+    }
+    
 }
 
 
@@ -86,7 +77,8 @@ void play_boss() {
         boss_action = 3;
         is_lunge = 0;
         //borrar la cabeza de tile
-        _x = boss_x;_y = boss_y - 2;_t = boss_screen_buffer[2];update_tile ();
+
+        _x = boss_x;_y = boss_y - 2;_t = 0;draw_invalidate_coloured_tile_gamearea ();
         boss_1_counter = 80;
         boss_1_lunge = BOSS_1_TIME_LUNGE;
         boss_screen_buffer[0] = boss_screen_buffer[1] = boss_screen_buffer[2] = 0;
@@ -102,14 +94,8 @@ void play_boss() {
             stage_clear_animation = 1;
         }
     }   
-
-    _x = 0; _y = 0; _t = boss_esbirros; print_number2 ();
     
-
-    if (_en_life_boss < 12 && timer_t - 5 < time_create_esbirros) {
-        boss_esbirros = 1;
-        time_create_esbirros = 0;
-    }
+   
 }
 
 void draw_sub_boss_life() {
@@ -119,6 +105,27 @@ void draw_sub_boss_life() {
         _x = 31; _y = 21 - _en_life_boss; _t = 5; _gp_gen =  (unsigned char *)("!"); print_str ();
     }
     
+}
+
+void draw_candy_level() {
+    if (total_candies < 20) {
+        for (rda = 0; rda <= 20; rda++) {
+            if (rda < total_candies) {
+                if (rda == 0) {
+                    _x = 0; _y = 21; _t = 3; _gp_gen =  (unsigned char *)("%"); print_str ();
+               } else {
+                   _x = 0; _y = 21 - rda; _t = 3; _gp_gen =  (unsigned char *)("\""); print_str ();
+               }
+            } else {
+                if (rda == 0) {
+                    _x = 0; _y = 21; _t = 3; _gp_gen =  (unsigned char *)("$"); print_str ();
+               } else {
+                   _x = 0; _y = 21 - rda; _t = 3; _gp_gen =  (unsigned char *)("!"); print_str ();
+               }
+            }
+            
+        }
+    }
 }
 
 void draw_boss_life(void) {
@@ -131,15 +138,12 @@ void draw_boss_life(void) {
     }
 }
 
-void draw_level_screen(void) {
-    #include "my/level_screen.h"
-}
-
 void start_dead(void) {
     fire_count_animation = 48;
     dead_animation = 1;
     tick_frame = 0;
     do_not_move = 1;
+    PLAY_MUSIC(11);
 }
 
 void restart_level(void) {
@@ -165,7 +169,7 @@ void restart_level(void) {
     boss_y = 8;
     _en_life_boss = 15;
     boss_screen_buffer[0] = boss_screen_buffer[1] = boss_screen_buffer[2] = 0;
-    draw_boss_life();
+    
     clear_sprites();
     
 }

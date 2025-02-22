@@ -189,7 +189,7 @@ void main (void) {
 				#endif
 			#endif
 
-			draw_level_screen();
+			
 			// Let's do it.
 			#include "mainloop/game_loop.h"
 

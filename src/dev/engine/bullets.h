@@ -86,6 +86,7 @@ void bullets_fire (unsigned char who) {
 	for (b_it = 0; b_it < MAX_BULLETS; ++ b_it) {
 		if (bullets_estado [b_it] == 0) {
 			_b_estado = 1;
+			bullets_who[b_it] = who;
 			#ifdef PLAYER_GENITAL
 				/*
 				switch (p_facing) {
@@ -257,6 +258,10 @@ void bullets_move (void) {
 				_b_x += _b_mx;								
 				if (_b_x > 240) {
 					_b_estado = 0;
+					if (bullets_who[b_it] == 1) {
+						shoots--;
+						bullets_who[b_it] = 0;
+					}
 				}
 			} 
 			#if defined(PLAYER_GENITAL) || defined(CAN_FIRE_UP)
@@ -272,15 +277,31 @@ void bullets_move (void) {
 			_y = (_b_y + 3) >> 4;
 			rda = attr (_x, _y);
 			#ifdef BREAKABLE_WALLS			
-				if (rda & 16) break_wall ();
+				if (rda & 16) {
+					break_wall ();
+					if (bullets_who[b_it] == 1) {
+						shoots--;
+						bullets_who[b_it] = 0;
+					}
+				}
 			#endif
-			if (rda > 7) _b_estado = 0;
+			if (rda > 7) {
+				_b_estado = 0;
+				if (bullets_who[b_it] == 1) {
+					shoots--;
+					bullets_who[b_it] = 0;
+				}
+			}
 		
 			#ifdef LIMITED_BULLETS
 				if (bullets_life [b_it] > 0) {
 					-- bullets_life [b_it];
 				} else {
 					_b_estado = 0;
+					if (bullets_who[b_it] == 1) {
+						shoots--;
+						bullets_who[b_it] = 0;
+					}
 				}
 			#endif
 

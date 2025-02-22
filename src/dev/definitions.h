@@ -115,6 +115,7 @@ unsigned char p_killme;
 unsigned char p_kill_amt;
 unsigned char p_tx, p_ty;
 unsigned int points = 0;
+unsigned char inmutable = 0;
 #ifdef PLAYER_HAS_JETPAC
 	unsigned char p_jetpac_on;
 #endif
@@ -172,7 +173,8 @@ unsigned char *_baddies_pointer;
 	unsigned char bullets_estado [MAX_BULLETS];
 	#ifdef LIMITED_BULLETS
 		unsigned char bullets_life [MAX_BULLETS];
-	#endif		
+	#endif
+	unsigned char bullets_who[MAX_BULLETS];		
 
 	unsigned char _b_estado;
 	unsigned char b_it, _b_x, _b_y;
@@ -271,6 +273,8 @@ unsigned char objs_old, keys_old, life_old, killed_old;
 		unsigned char *level_str =  "LEVEL 0X - 0X";
 	#else
 	unsigned char *level_str = "LEVEL 0X - 0X";
+	unsigned char *level_boss_1_str = "KING ANT";
+	unsigned char *level_bonus_str = "BONUS LEVEL";
 	#endif
 	unsigned char silent_level = 0;
 #endif

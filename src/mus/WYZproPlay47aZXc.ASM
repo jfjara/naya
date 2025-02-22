@@ -1151,6 +1151,8 @@ SONG_12:
 	INCBIN "gover.mus.bin"
 SONG_13:
 	INCBIN "ending.mus.bin"
+SONG_14:
+	INCBIN "invencible.mus.bin"
 
 ;; INCLUIR LOS EFECTOS DE SONIDO:
 
@@ -1161,7 +1163,7 @@ INCLUDE "efectos.asm"
 TABLA_SONG:     DW      SONG_0, SONG_1, SONG_2, SONG_3
 				DW      SONG_4, SONG_5, SONG_6, SONG_7
 				DW      SONG_8, SONG_9, SONG_10, SONG_11
-				DW		SONG_12, SONG_13
+				DW		SONG_12, SONG_13, SONG_14
 
 ;; Añadir entradas para cada efecto
 

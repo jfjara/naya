@@ -472,6 +472,7 @@ void enems_move (void) {
 					en_an_next_frame [enit] = enem_cells [en_an_base_frame [enit] + en_an_frame [enit]];
 				}
 				*/
+			if (_en_t != 5) {
 				#asm
 						ld  bc, (_enit)
 						ld  b, 0
@@ -515,11 +516,12 @@ void enems_move (void) {
 						ldi 							; Copy 16 bit
 					._enems_move_update_frame_done
 				#endasm
+			}
 				if (_en_t == 5) {
 					if (b_aux == 0)
-						en_an_next_frame[enit]  = sprite_15_a;
+						en_an_base_frame[enit] = 22;
 						else {
-							en_an_next_frame[enit]  = sprite_16_a;
+							en_an_base_frame[enit] = 23;
 							b_aux--;
 						}
 				}
@@ -790,6 +792,7 @@ void enems_move (void) {
 							if (_en_t == 5) {
 								--_en_life_boss;
 								b_aux = 8;
+
 								if (_en_life_boss == 0) {
 									boss_action = 10;  //muerte
 									boss_1_counter = 16;
@@ -797,6 +800,10 @@ void enems_move (void) {
 								draw_sub_boss_life();
 							} else {
 								-- _en_life;
+							}
+							if (bullets_who[gpjt] == 1) {
+								shoots--;
+								bullets_who[b_it] = 0;
 							}
 						} 
 					#else
@@ -807,6 +814,13 @@ void enems_move (void) {
 						enems_draw_current ();
 						sp_UpdateNow ();
 						active = 0;
+						if (_en_t != 5) {
+							points += 100;
+						}
+						if (_en_t == 5) {
+							points += 500;
+						}
+						print_points();
 	
 						#ifdef MODE_128K
 							en_an_state [enit] |= GENERAL_DYING;

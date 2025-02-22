@@ -13,14 +13,14 @@ if (p_direction == 0) {  //parado derecha
     
     if (faps % 12 == 0) {
         if (last_direction == 2) {
-            if (tick_frame == 7) {
+            if (tick_frame == 1) {
                 tick_frame = 0;
             } else {
-                tick_frame = 7;
+                tick_frame = 1;
             }
         } else if (last_direction == 1) {
             if (tick_frame == 6) {
-                tick_frame = 1;
+                tick_frame = 7;
             } else {
                 tick_frame = 6;
             }

@@ -8,20 +8,16 @@
 	STOP_SOUND();
 	espera_activa (10);
 	
-	
 	level_str [7] = 49 + level;
 	level_str[12] = 49 + slevel;
-	_x = 8; _y = 12; _t = 71; _gp_gen = level_str; print_str ();
+	_x = 12; _y = 12; _t = 71; _gp_gen = level_bonus_str; print_str ();
 	sp_UpdateNow ();
-	#ifdef MODE_128K
-		PLAY_SOUND (2);
-	#else			
-		beep_fx (1);
-	#endif
+	// #ifdef MODE_128K
+	// 	PLAY_SOUND (SFX_START);
+	// #else			
+	// 	beep_fx (1);
+	// #endif
 
 	espera_activa (300);
-	PLAY_MUSIC (levels [level].music_id + slevel);
-	
-	total_candies = 0;
-	
+	PLAY_MUSIC (9);
 }

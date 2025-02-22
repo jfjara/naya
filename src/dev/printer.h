@@ -126,8 +126,8 @@ unsigned char qtile (unsigned char x, unsigned char y) {
 }
 
 void print_stage_clear(void) {
-	unsigned char* stage_clear[] = {"L","E","V","E","L"," ","C","O","M","P","L", "E", "T", "E", " ", "!"};	
-	for (rda = 0; rda < 16; rda++) {
+	unsigned char* stage_clear[] = {"L","E","V","E","L"," ","C","O","M","P","L", "E", "T", "E"};	
+	for (rda = 0; rda < 14; rda++) {
 		rdc = rand() % 7;
 		if (rdc == 0 || rdc == 7) {
 			rdc = 4;

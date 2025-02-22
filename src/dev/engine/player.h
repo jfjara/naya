@@ -247,9 +247,22 @@ void player_calc_bounding_box (void) {
 
 unsigned char player_move (void) {	
 
+	
 	p_direction = 0;
 
 	if (do_not_move == 0) {
+
+		for (gpjt = 0; gpjt < MAX_BULLETS; gpjt ++) {
+			if (bullets_estado [gpjt] == 1) {
+				blx = bullets_x [gpjt] + 3; 
+				bly = bullets_y [gpjt] + 3;
+				if ((blx >= gpx && blx <= gpx + 15 && bly >= gpy && bly <= gpy + 15) && p_estado == EST_NORMAL) {
+					bullets_estado [gpjt] = 0;
+					p_killme = 1;
+					
+				}
+			}
+		}
 	
 		
 	// ***************************************************************************
@@ -758,7 +771,7 @@ unsigned char player_move (void) {
 					}
 				#else
 					if (p_saltando == 0) {
-						
+						p_direction = 3;
 						if (possee || p_gotten || hit_v) {
 							p_saltando = 1;
 							p_cont_salto = 0;
@@ -1468,20 +1481,24 @@ unsigned char player_move (void) {
 
 	#ifdef PLAYER_CAN_FIRE
 		// Disparos
-		if ((pad0 & sp_FIRE) == 0 && p_disparando == 0) {			
-			p_disparando = 1;
-			#ifdef FIRE_TO_PUSH	
-				//if (pushed_any == 0)
-			#endif
-				bullets_fire (1);
-			#ifdef FIRE_TO_PUSH	
-				//else pushed_any = 0;
-			#endif
+		if (shoots < max_shoots) {
+			if ((pad0 & sp_FIRE) == 0 && p_disparando == 0) {			
+				p_disparando = 1;
+				shoots++;
+				#ifdef FIRE_TO_PUSH	
+					//if (pushed_any == 0)
+				#endif
+					bullets_fire (1);
+					p_direction = 4;
+				#ifdef FIRE_TO_PUSH	
+					//else pushed_any = 0;
+				#endif
+			}
+			
+			if ((pad0 & sp_FIRE)) 
+				p_disparando = 0;
 		}
 		
-		if ((pad0 & sp_FIRE)) 
-			p_disparando = 0;
-
 	#endif
 
 	#ifndef DEACTIVATE_EVIL_TILE
@@ -1581,10 +1598,12 @@ void player_kill (unsigned char sound) {
 		o_pant = 0xff; // Reload
 	#endif
 
-	#ifdef PLAYER_FLICKERS
-		p_estado = EST_PARP;
-		p_ct_estado = 50;
-	#endif
+	if (p_life > 0) {
+		#ifdef PLAYER_FLICKERS
+			p_estado = EST_PARP;
+			p_ct_estado = 50;
+		#endif
+	}
 
 	#ifdef DIE_AND_RESPAWN
 		#asm

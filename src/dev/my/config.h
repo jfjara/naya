@@ -320,7 +320,7 @@
 #define PLAYER_AX					64		// Acceleration (24/64 = 0,375 p?xels/frame^2)
 #define PLAYER_RX					64		// Friction (32/64 = 0,5 p?xels/frame^2)
 #define TIME_DOG_ANIMATION			64
-#define TIME_STAGE_CLEAR_ANIMATION  80
+#define TIME_STAGE_CLEAR_ANIMATION  110
 
 #define BOSS_1_TIME_LUNGE           48 
 // ============================================================================
@@ -344,7 +344,7 @@
 unsigned char behs [] = {
 	0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 8, 0, 0, 0, 0,
 	0, 0, 0, 0, 4, 0, 0, 0, 4, 8, 0, 128, 128, 0, 0, 4,
-	0, 24, 128, 128, 128, 128, 128, 1, 1, 1, 1, 1, 0, 4, 4, 0,
+	0, 24, 128, 128, 128, 128, 128, 0, 0, 0, 0, 0, 0, 4, 4, 0,
 };
 #endif
 

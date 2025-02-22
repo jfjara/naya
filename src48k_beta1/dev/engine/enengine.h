@@ -517,9 +517,9 @@ void enems_move (void) {
 				#endasm
 				if (_en_t == 5) {
 					if (b_aux == 0)
-						en_an_next_frame[enit]  = sprite_15_a;
+						en_an_next_frame[enit]  = sprite_7_a;
 						else {
-							en_an_next_frame[enit]  = sprite_16_a;
+							en_an_next_frame[enit]  = sprite_8_a;
 							b_aux--;
 						}
 				}
@@ -787,6 +787,7 @@ void enems_move (void) {
 
 					#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
 						if (_en_t != 4) {
+							shoots = 0;
 							if (_en_t == 5) {
 								--_en_life_boss;
 								b_aux = 8;

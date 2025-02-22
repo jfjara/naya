@@ -41,6 +41,7 @@ if (animate_dog == 1) {
         animate_dog = 0;
         tile_dog = 29;
         stage_clear_animation = 1;
+        PLAY_MUSIC (1);
     }   
 }
 
@@ -48,6 +49,7 @@ if (stage_clear_animation == 1) {
     if (time_animation > 1) {
         print_stage_clear();
         time_animation--;
+        do_not_move = 1;
     } else {
         stage_clear_animation = 0;
         animate_dog = 0;
@@ -66,16 +68,24 @@ if (stage_clear_animation == 1) {
             // vamos al nivel del boss
             n_pant = 0;
             timer_t = 60;
+            #include "my/level_boss_screen.h"
         } else if (slevel == 4) {
             n_pant = 1;
-            timer_t = 10;
+            timer_t = 14;
+            #include "my/level_bonus_screen.h"
+            total_candies = 0;
+            draw_candy_level();
+            max_shoots = 1;
         } else {
             timer_t = 99;
+            #include "my/level_screen.h"
+            total_candies = 0;
+            draw_candy_level();
+            max_shoots = 1;
         }
-        draw_level_screen();
+        
         timer_on = 1;
         do_not_move = 0;
             
-        
     }
 }

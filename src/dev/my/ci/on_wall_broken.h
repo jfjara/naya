@@ -4,14 +4,14 @@
 
 //coger aleatorio una chuche 0-5: piru 6-11: moneda 12-17: helado
 
-rdc = rand() % 21;
-if (rdc < 6) {
+rdc = rand() % 31;
+if (rdc < 16) {
     _t = 34 ;
-} else if (rdc < 12) {
+} else if (rdc < 22) {
     _t = 35;
-} else if (rdc < 18) {
+} else if (rdc < 28) {
     _t = 37;
-} else if (rdc < 19) {
+} else if (rdc < 29) {
     _t = 38;
 } else {
     _t = 36;

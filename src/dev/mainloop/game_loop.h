@@ -42,14 +42,14 @@
 		script_result = 0;
 	#endif
 	
-	#ifdef MODE_128K
-			// Play music
-		#ifdef COMPRESSED_LEVELS		
-			PLAY_MUSIC (levels [level].music_id);
-		#else
-			PLAY_MUSIC (1);
-		#endif		
-	#endif
+	// #ifdef MODE_128K
+	// 		// Play music
+	// 	#ifdef COMPRESSED_LEVELS		
+	// 		PLAY_MUSIC (levels [level].music_id + slevel);
+	// 	#else
+	// 		PLAY_MUSIC (1);
+	// 	#endif		
+	// #endif
 
 	#ifdef ACTIVATE_SCRIPTING
 		// Entering game
@@ -126,12 +126,17 @@
 			#include "my/ci/before_entering_screen.h"
 			draw_scr ();
 			o_pant = n_pant;
+			shoots = 0;
+			for (b_it = 0; b_it < MAX_BULLETS; b_it ++) {
+				bullets_who[b_it] = 0;
+			}
 			#if defined DIE_AND_RESPAWN && defined PLAYER_GENITAL
 				safe_gpx = gpx; safe_gpy = gpy;
 			#endif
 		}
 
 		faps++;
+		
 
 		if (faps == 24) {
 			animate_tiles();
@@ -150,17 +155,19 @@
 				do_not_move = 0;
 				clear_sprites();
 			} else {
+
 				p_life = 2;
 				p_killme = 0;
 				o_pant = 99;
 				clear_sprites();
 				clear_gamezone();
 				blackout_area();
-				draw_level_screen();
+				//#include "my/level_screen.h"
 				restart_level();
 				invalidate_viewport();
 				draw_player_sublives();
 				draw_player_lives();
+				PLAY_MUSIC (levels [level].music_id + slevel);
 				continue;
 			}
 		}
@@ -179,7 +186,19 @@
 
 			#ifdef TIMER_KILL_0
 				if (timer_zero) {
-					#ifdef SHOW_TIMER_OVER
+					timer_on = 0;
+					if (n_pant == 1) {
+						clear_sprites ();
+						time_over ();
+						//stage_clear_animation = 1;
+						//comprobar si todas chuches cogidas +1 vida
+						timer_zero = 0;
+						level++;
+						slevel = 0;
+ 						prepare_level ();
+						#include "my/level_screen.h";
+					} else {
+						#ifdef SHOW_TIMER_OVER
 						#ifndef TIMER_SCRIPT_0
 							clear_sprites ();
 							time_over ();
@@ -198,10 +217,7 @@
 						p_killme = 4;
 					#endif
 
-					#ifdef PLAYER_FLICKERS
-						p_estado = EST_PARP;
-						p_ct_estado = 50;
-					#endif
+					
 
 					#if defined(TIMER_WARP_TO_X) && defined(TIMER_WARP_TO_Y)
 						p_x = TIMER_WARP_TO_X << 10;
@@ -212,6 +228,7 @@
 						n_pant = TIMER_WARP_TO;
 						draw_scr ();
 					#endif
+					}					
 				}
 			#endif
 
@@ -297,8 +314,15 @@
 			// Flickering
 			if (p_estado == EST_PARP) {
 				p_ct_estado --;
-				if (p_ct_estado == 0)
+				if (p_ct_estado == 0) {
 					p_estado = EST_NORMAL; 
+					if (inmutable == 1) {
+						STOP_SOUND();
+						PLAY_MUSIC (levels [level].music_id + slevel);
+						espera_activa(5);
+						inmutable = 0;
+					}
+				}
 			}
 		#endif			
 		
