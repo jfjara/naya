@@ -17,20 +17,20 @@ if (_t == 34 || _t == 37) {
     get_object(50);
     total_candies++;
     draw_candy_level();
-    PLAY_SOUND(8);
+    if (total_candies != 20) PLAY_SOUND(8);
 }
 if (_t == 35) {
     get_object(100);
     total_candies++;
     draw_candy_level();
-    PLAY_SOUND(8);
+    if (total_candies != 20) PLAY_SOUND(8);
 }
 if (_t == 36) {
     get_object(100); //invencibility
     p_estado = EST_PARP;
 	p_ct_estado = 200;
     inmutable = 1;
-    PLAY_MUSIC(1);
+    PLAY_MUSIC(14);
 }
 if (_t == 38) {
     get_object(100);
@@ -41,4 +41,5 @@ if (_t == 38) {
 
 if (total_candies == 20) {
     max_shoots = 2;
+    PLAY_SOUND(11);
 }

@@ -155,6 +155,7 @@ void restart_level(void) {
     gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
     if (n_pant == 0) {
         timer_t = 60;
+        gpy = PLAYER_INI_Y << 4; p_y = gpy << 6 - 8;
     } else timer_t = 99;
     timer_on = 1;
     do_not_move = 0;

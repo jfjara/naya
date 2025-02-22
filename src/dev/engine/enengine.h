@@ -819,6 +819,7 @@ void enems_move (void) {
 						}
 						if (_en_t == 5) {
 							points += 500;
+							PLAY_MUSIC (1);
 						}
 						print_points();
 	
