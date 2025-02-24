@@ -137,9 +137,12 @@
 
 		faps++;
 		
+		if (level == 1 && faps % 4 == 0) {
+			animate_tiles(1);
+		}
 
 		if (faps == 24) {
-			animate_tiles();
+			animate_tiles(0);
 			faps = 0;
 		}
 
@@ -148,14 +151,15 @@
 		}
 		if (dead_animation == 1 && fire_count_animation == 0) {
 			dead_animation = 0;
-			if (p_total_lifes == 0 && p_life == 0) {
+			p_total_lifes--;
+			draw_player_lives();
+			if (p_total_lifes == 0) {
 				playing = 0;  //el game over debe de salir sl acabar la animacion
 				dead_animation = 0;
 				fire_count_animation = 0;
 				do_not_move = 0;
 				clear_sprites();
 			} else {
-
 				p_life = 2;
 				p_killme = 0;
 				o_pant = 99;
@@ -166,7 +170,6 @@
 				restart_level();
 				invalidate_viewport();
 				draw_player_sublives();
-				draw_player_lives();
 				PLAY_MUSIC (levels [level].music_id + slevel);
 				continue;
 			}
@@ -190,8 +193,6 @@
 					if (n_pant == 1) {
 						clear_sprites ();
 						time_over ();
-						//stage_clear_animation = 1;
-						//comprobar si todas chuches cogidas +1 vida
 						timer_zero = 0;
 						level++;
 						slevel = 0;
@@ -200,10 +201,10 @@
 					} else {
 						#ifdef SHOW_TIMER_OVER
 						#ifndef TIMER_SCRIPT_0
-							clear_sprites ();
+							//clear_sprites ();
 							time_over ();
-							p_total_lifes--;
 							start_dead();
+							
 						#endif
 					#endif				
 					timer_zero = 0;
@@ -212,7 +213,7 @@
 					#endif
 					
 					#ifdef MODE_128K
-						p_killme = 7;
+						//p_killme = 7;
 					#else
 						p_killme = 4;
 					#endif

@@ -146,6 +146,13 @@ void start_dead(void) {
     PLAY_MUSIC(11);
 }
 
+void up_live(unsigned char flag) {
+    umbral_points = flag;
+    p_total_lifes++;
+    PLAY_SOUND(11);
+    draw_player_lives();
+}
+
 void restart_level(void) {
     if (n_pant != 0) {
         n_pant = SCR_INICIO + slevel;

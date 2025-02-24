@@ -14,3 +14,5 @@
 ..\..\src\utils\apultra.exe gover.mus gover.mus.bin
 ..\..\src\utils\apultra.exe ending.mus ending.mus.bin
 ..\..\src\utils\apultra.exe invencible.mus invencible.bin
+..\..\src\utils\apultra.exe level2-1.mus level2-1.mus.bin
+

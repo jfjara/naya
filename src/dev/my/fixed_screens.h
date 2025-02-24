@@ -35,8 +35,12 @@ void game_ending (void) {
 }
 
 void game_over (void) {
+	
+	clear_sprites();
+	clear_gamezone();
+	
 	_x = 10; _y = 11; _t = 79; _gp_gen = spacer; print_str ();
-	_x = 10; _y = 12; _t = 79; _gp_gen = (unsigned char *)(" GAME OVER! "); print_str ();
+	_x = 10; _y = 12; _t = 79; _gp_gen = (unsigned char *)(" GAME OVER  "); print_str ();
 	_x = 10; _y = 13; _t = 79; _gp_gen = spacer; print_str ();
 	sp_UpdateNow ();
 
@@ -46,13 +50,13 @@ void game_over (void) {
 		lame_sound ();
 	#endif
 
-	espera_activa (500);
+	espera_activa (800);
 }
 
 #if defined(TIMER_ENABLE) && defined(SHOW_TIMER_OVER)
 	void time_over (void) {
 		_x = 10; _y = 11; _t = 79; _gp_gen = spacer; print_str ();
-		_x = 10; _y = 12; _t = 79; _gp_gen = (unsigned char *)(" TIME'S UP! "); print_str ();
+		_x = 10; _y = 12; _t = 79; _gp_gen = (unsigned char *)("  TIME'S UP "); print_str ();
 		_x = 10; _y = 13; _t = 79; _gp_gen = spacer; print_str ();
 		sp_UpdateNowEx (0);
 			
@@ -62,7 +66,7 @@ void game_over (void) {
 		lame_sound ();
 		#endif
 		
-		espera_activa (250);
+		espera_activa (80);
 	}
 #endif
 

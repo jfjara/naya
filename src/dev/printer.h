@@ -133,27 +133,64 @@ void print_stage_clear(void) {
 			rdc = 4;
 		}
 		_gp_gen = stage_clear[rda];
-		_x = 10 + rda; _y = 12; _t = rdc; print_str ();
+		_x = 8 + rda; _y = 12; _t = rdc; print_str ();
 	}
 }
 
-void animate_tiles() {
+void animate_tiles(unsigned char doble_speed) {
 	map_pointer = map_buff;
 	for (gpit = 0; gpit < 150; ++ gpit) {
 		_t = *map_pointer;
-		if (_t == 5) {
-			_t = 6;
-			has_animate = 1;
-		} else if (_t == 6) {
-			_t = 5;
-			has_animate = 1;
-		} else if (_t == 2) {
-			_t = 32;
-			has_animate = 1;
-		} else if (_t == 32) {
-			_t = 2;
-			has_animate = 1;
+
+		if (level == 0) {
+			if (_t == 5) {
+				_t = 6;
+				has_animate = 1;
+			} else if (_t == 6) {
+				_t = 5;
+				has_animate = 1;
+			} else if (_t == 2) {
+				_t = 32;
+				has_animate = 1;
+			} else if (_t == 32) {
+				_t = 2;
+				has_animate = 1;
+			}
+		} else if (level == 1) {
+
+			if (doble_speed == 1) {
+				if (_t == 5) {
+					_t = 6;
+					has_animate = 1;
+				} else if (_t == 6) {
+					_t = 5;
+					has_animate = 1;
+				}
+				if (_t == 2) {
+					_t = 32;
+					has_animate = 1;
+				} else if (_t == 32) {
+					_t = 2;
+					has_animate = 1;
+				}
+			} else {
+				if (_t == 18) {
+					_t = 15;
+					has_animate = 1;
+				} else if (_t == 15) {
+					_t = 18;
+					has_animate = 1;
+				} else if (_t == 3) {
+					_t = 21;
+					has_animate = 1;
+				} else if (_t == 21) {
+					_t = 3;
+					has_animate = 1;
+				}
+			}
+			
 		}
+		
 
 		if (has_animate == 1) {
 			map_attr [gpit] = behs [_t];

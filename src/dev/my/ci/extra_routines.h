@@ -10,6 +10,14 @@ if (n_pant == 0) { //pantalla del boss 1. Preparar el previo
     boss = 0;
 }
 
+if (slevel == 4 && stage_clear_animation == 0) {
+    if (total_candies >= 12) {
+        stage_clear_animation = 1;
+        timer_on = 0;
+        up_live(umbral_points);
+    }
+}
+
 if (boss == 1) {
     draw_boss_life();
     play_boss();
@@ -54,8 +62,15 @@ if (stage_clear_animation == 1) {
         stage_clear_animation = 0;
         animate_dog = 0;
         time_animation = TIME_DOG_ANIMATION;
-        slevel++;
-
+        
+        if (slevel == 4) {
+            slevel = 0;
+            level++;
+            prepare_level();
+        } else {
+            slevel++;
+        }
+        
         n_pant = SCR_INICIO + slevel;
         gpx = PLAYER_INI_X << 4; p_x = gpx << 6;
         gpy = PLAYER_INI_Y << 4; p_y = gpy << 6;
@@ -69,15 +84,17 @@ if (stage_clear_animation == 1) {
             n_pant = 0;
             timer_t = 60;
             #include "my/level_boss_screen.h"
+            gpy = PLAYER_INI_Y << 4; p_y = gpy << 6 - 8;
+
         } else if (slevel == 4) {
             n_pant = 1;
-            timer_t = 14;
+            timer_t = 10;
             #include "my/level_bonus_screen.h"
             total_candies = 0;
             draw_candy_level();
             max_shoots = 1;
         } else {
-            timer_t = 99;
+            timer_t = 99;  
             #include "my/level_screen.h"
             total_candies = 0;
             draw_candy_level();

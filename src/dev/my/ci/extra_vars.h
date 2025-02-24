@@ -22,6 +22,7 @@ unsigned char ene_direction = 1; // abajo
 unsigned char shoots = 0;
 unsigned char max_shoots = 1;
 unsigned char total_candies = 0;
+unsigned char umbral_points = 0;
 
 unsigned char gbx, gby;
 

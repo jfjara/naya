@@ -111,7 +111,7 @@ void main (void) {
 			main_script_offset = (int) (main_script);
 		#endif
 
-		level = 0;
+		level = 1;  //jfjara
 		slevel = 0;
 		points = 0;
 		objects_index = 0;
@@ -119,7 +119,7 @@ void main (void) {
 			objects[rda].n_pant = 99; objects[rda].gpit = objects[rda].x = objects[rda].y = 255;
 		}
 
-
+		//prepare_level();
 		// Here the title screen
 		
 		#include "my/title_screen.h"
@@ -220,7 +220,7 @@ void main (void) {
 					}
 				} else {
 					#ifdef MODE_128K
-						//PLAY_MUSIC (8);
+						PLAY_MUSIC (13);
 					#endif
 
 					#if defined(TIMER_ENABLE) && defined(TIMER_GAMEOVER_0) && defined(SHOW_TIMER_OVER)

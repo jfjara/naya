@@ -11,26 +11,26 @@ typedef struct {
 
 RESOURCE resources [] = {
     { 3, 0xC000 },
-    { 3, 0xCEE9 },
-    { 3, 0xDDA4 },
-    { 3, 0xEC5F },
+    { 3, 0xCF05 },
+    { 3, 0xDDC0 },
+    { 3, 0xEC7B },
     { 4, 0xC000 },
-    { 4, 0xCEBA },
-    { 4, 0xD72C },
-    { 4, 0xDF15 },
-    { 4, 0xE672 },
-    { 4, 0xED48 },
-    { 4, 0xF41E },
+    { 4, 0xCEA8 },
+    { 4, 0xD71A },
+    { 4, 0xDF03 },
+    { 4, 0xE660 },
+    { 4, 0xED36 },
+    { 4, 0xF40C },
     { 6, 0xC000 },
     { 6, 0xC670 },
     { 6, 0xCCDD },
     { 6, 0xD331 },
     { 6, 0xD939 },
-    { 3, 0xFB1A },
-    { 4, 0xFA96 },
-    { 4, 0xFDA5 },
-    { 4, 0xFE84 },
-    { 4, 0xFF3D }
+    { 3, 0xFB36 },
+    { 4, 0xFA84 },
+    { 4, 0xFD93 },
+    { 4, 0xFE72 },
+    { 4, 0xFF2B }
 };
 
 #define LEVEL0C_BIN                     0

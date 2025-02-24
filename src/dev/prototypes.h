@@ -118,7 +118,7 @@ void draw_objs ();
 void print_str (void);
 void blackout_area (void);
 void clear_sprites (void);
-void animate_tiles(void);
+void animate_tiles(unsigned char doble_speed);
 void print_stage_clear(void);
 void draw_boss_life(void);
 void draw_candy_level(void);
@@ -129,6 +129,7 @@ void start_dead(void);
 void draw_player_sublives(void);
 void print_points(void) ;
 void clear_gamezone() ;
+void up_live(unsigned char flag);
 
 // savegame.h
 void mem_save (void);
