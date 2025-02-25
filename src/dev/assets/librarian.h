@@ -11,33 +11,33 @@ typedef struct {
 
 RESOURCE resources [] = {
     { 3, 0xC000 },
-    { 3, 0xCF05 },
-    { 3, 0xDDC0 },
-    { 3, 0xEC7B },
+    { 3, 0xCF9C },
+    { 3, 0xDEA1 },
+    { 3, 0xED5C },
     { 4, 0xC000 },
-    { 4, 0xCEA8 },
-    { 4, 0xD71A },
-    { 4, 0xDF03 },
-    { 4, 0xE660 },
-    { 4, 0xED36 },
-    { 4, 0xF40C },
+    { 4, 0xCEBB },
+    { 4, 0xD72D },
+    { 4, 0xDF16 },
+    { 4, 0xE673 },
+    { 4, 0xED49 },
+    { 4, 0xF41F },
     { 6, 0xC000 },
     { 6, 0xC670 },
     { 6, 0xCCDD },
     { 6, 0xD331 },
     { 6, 0xD939 },
-    { 3, 0xFB36 },
-    { 4, 0xFA84 },
-    { 4, 0xFD93 },
-    { 4, 0xFE72 },
-    { 4, 0xFF2B }
+    { 4, 0xFA97 },
+    { 3, 0xFC17 },
+    { 4, 0xFF02 },
+    { 3, 0xFF26 },
+    { 6, 0xDF33 }
 };
 
-#define LEVEL0C_BIN                     0
-#define LEVEL2C_BIN                     1
-#define LEVEL3C_BIN                     2
-#define LEVEL4C_BIN                     3
-#define LEVEL1C_BIN                     4
+#define LEVEL1C_BIN                     0
+#define LEVEL0C_BIN                     1
+#define LEVEL2C_BIN                     2
+#define LEVEL3C_BIN                     3
+#define LEVEL4C_BIN                     4
 #define ZONEA_BIN                       5
 #define ZONEB_BIN                       6
 #define INTRO7_BIN                      7

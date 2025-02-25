@@ -431,7 +431,6 @@ void enems_move (void) {
 			case 1:
 			case 2:
 			case 3:
-			case 4:
 			#ifdef ENABLE_ORTHOSHOOTERS
 				case 5:
 			#endif

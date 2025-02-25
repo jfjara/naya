@@ -20,7 +20,12 @@ if (slevel == 4 && stage_clear_animation == 0) {
 
 if (boss == 1) {
     draw_boss_life();
-    play_boss();
+    if (level == 0) {
+        play_boss1();
+    } else if (level == 1) {
+        play_boss2();
+    }
+    
 }
 
 if (animate_dog == 1 && time_animation == TIME_DOG_ANIMATION ) {

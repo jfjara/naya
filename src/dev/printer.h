@@ -138,6 +138,9 @@ void print_stage_clear(void) {
 }
 
 void animate_tiles(unsigned char doble_speed) {
+	if (n_pant == 0) {
+		return;
+	}
 	map_pointer = map_buff;
 	for (gpit = 0; gpit < 150; ++ gpit) {
 		_t = *map_pointer;
@@ -191,7 +194,6 @@ void animate_tiles(unsigned char doble_speed) {
 			
 		}
 		
-
 		if (has_animate == 1) {
 			map_attr [gpit] = behs [_t];
 			map_buff[gpit] = _t;

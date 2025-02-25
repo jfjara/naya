@@ -46,10 +46,30 @@ void lunge(unsigned char increase) {
     boss_action_counter--;
 }
 
-void play_boss() {
+void play_boss2() {
+
+    special_ene = 1;
+    boss_action_counter--;
+    
+    if (boss_action == 0 && boss_action_counter == 0) {
+        boss_action = 1;
+        boss_action_counter = 20;
+        _x = 12;_y = 7;_t = 20;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 7;_t = 42;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 8;_t = 43;draw_invalidate_coloured_tile_gamearea ();
+    }
+    if (boss_action == 1 && boss_action_counter == 0) {
+        boss_action = 0;
+        boss_action_counter = 120;
+        _x = 12;_y = 7;_t = 0;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 7;_t = 40;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 8;_t = 41;draw_invalidate_coloured_tile_gamearea ();
+    }
+}
+
+void play_boss1() {
 
     //tipo de boss
-
     if (boss_action == 0) {
         boss_1_lunge--;
     }
@@ -77,7 +97,6 @@ void play_boss() {
         boss_action = 3;
         is_lunge = 0;
         //borrar la cabeza de tile
-
         _x = boss_x;_y = boss_y - 2;_t = 0;draw_invalidate_coloured_tile_gamearea ();
         boss_1_counter = 80;
         boss_1_lunge = BOSS_1_TIME_LUNGE;
@@ -94,8 +113,6 @@ void play_boss() {
             stage_clear_animation = 1;
         }
     }   
-    
-   
 }
 
 void draw_sub_boss_life() {

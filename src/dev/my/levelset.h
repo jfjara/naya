@@ -46,7 +46,8 @@
 // map_w, map_h, scr_ini, ini_x, ini_y, max_objs, c_map_bolts, c_tileset, c_enems_hotspots, c_behs, script
 LEVEL levels [] = {
 	{ LEVEL0C_BIN, 3 },
-	{ LEVEL1C_BIN, 15 },
+	{ LEVEL1C_BIN, 3 },
+	//{ LEVEL1C_BIN, 15 },
 	{ LEVEL2C_BIN, 5 },
 	{ LEVEL3C_BIN, 7 },
 	{ LEVEL4C_BIN, 3 },

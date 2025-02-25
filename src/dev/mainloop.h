@@ -112,7 +112,7 @@ void main (void) {
 		#endif
 
 		level = 1;  //jfjara
-		slevel = 0;
+		slevel = 2;
 		points = 0;
 		objects_index = 0;
 		for (rda = 0; rda < 80; rda++) {
@@ -189,7 +189,7 @@ void main (void) {
 				#endif
 			#endif
 
-			
+			n_pant = 0;  //jfjara
 			// Let's do it.
 			#include "mainloop/game_loop.h"
 
