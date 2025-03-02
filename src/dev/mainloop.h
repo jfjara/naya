@@ -111,9 +111,12 @@ void main (void) {
 			main_script_offset = (int) (main_script);
 		#endif
 
-		level = 1;  //jfjara
-		slevel = 2;
+		umbral_points = 0;
+		level = 2;  //jfjara
+		slevel = 0;
+		
 		points = 0;
+		max_shoots = 1;
 		objects_index = 0;
 		for (rda = 0; rda < 80; rda++) {
 			objects[rda].n_pant = 99; objects[rda].gpit = objects[rda].x = objects[rda].y = 255;
@@ -188,8 +191,7 @@ void main (void) {
 					#endasm
 				#endif
 			#endif
-
-			n_pant = 0;  //jfjara
+			//n_pant = 2;
 			// Let's do it.
 			#include "mainloop/game_loop.h"
 

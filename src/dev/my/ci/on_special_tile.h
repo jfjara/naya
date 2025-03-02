@@ -44,16 +44,6 @@ if (total_candies == 20) {
     PLAY_SOUND(11);
 }
 
-if (points >= 10000 && umbral_points == 0) {
-    up_live(1);
-}
 
-if (points >= 20000 && umbral_points == 1) {
-    up_live(2);
-}
-
-if (points >= 40000 && umbral_points == 2) {
-    up_live(3);
-}
 
 

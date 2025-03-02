@@ -127,6 +127,7 @@
 			draw_scr ();
 			o_pant = n_pant;
 			shoots = 0;
+			boss_aux_2 = 1;
 			for (b_it = 0; b_it < MAX_BULLETS; b_it ++) {
 				bullets_who[b_it] = 0;
 			}
@@ -166,11 +167,17 @@
 				clear_sprites();
 				clear_gamezone();
 				blackout_area();
-				//#include "my/level_screen.h"
 				restart_level();
 				invalidate_viewport();
 				draw_player_sublives();
-				PLAY_MUSIC (levels [level].music_id + slevel);
+				
+				if (slevel == 3) {
+					_x = 0; _y = 0; _t = slevel; print_number_wan ();
+					PLAY_MUSIC (10);
+				}else {
+					PLAY_MUSIC (levels [level].music_id + slevel);
+					_x = 10; _y = 0; _t = slevel; print_number_wan ();
+				}
 				continue;
 			}
 		}

@@ -52,19 +52,86 @@ void play_boss2() {
     boss_action_counter--;
     
     if (boss_action == 0 && boss_action_counter == 0) {
+        boss_aux_3 = 0;
         boss_action = 1;
         boss_action_counter = 20;
         _x = 12;_y = 7;_t = 20;draw_invalidate_coloured_tile_gamearea ();
         _x = 13;_y = 7;_t = 42;draw_invalidate_coloured_tile_gamearea ();
         _x = 13;_y = 8;_t = 43;draw_invalidate_coloured_tile_gamearea ();
+        boss_aux_1 = 1;  //lanza hueso
+        rda = timer_t % 2;
+        if (rda == 0) {
+            boss_y = 15;
+        } else {
+            boss_y = 18;
+        }
+        boss_x = 23;
+        
+    }
+    if (boss_action == 2) {
+        boss_action = 1;
+        boss_action_counter = 20;
+        _x = 12;_y = 7;_t = 20;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 7;_t = 42;draw_invalidate_coloured_tile_gamearea ();
+        _x = 13;_y = 8;_t = 43;draw_invalidate_coloured_tile_gamearea ();
+        boss_aux_1 = 1;  //lanza hueso
+        rda = timer_t % 2;
+        boss_y = 15;
+        boss_x = 23;
+        
     }
     if (boss_action == 1 && boss_action_counter == 0) {
         boss_action = 0;
-        boss_action_counter = 120;
+        boss_action_counter = 60;
         _x = 12;_y = 7;_t = 0;draw_invalidate_coloured_tile_gamearea ();
         _x = 13;_y = 7;_t = 40;draw_invalidate_coloured_tile_gamearea ();
         _x = 13;_y = 8;_t = 41;draw_invalidate_coloured_tile_gamearea ();
+       
     }
+    
+    if (boss_aux_1 == 1) {
+        boss_aux_3 = 1;
+        if (boss_x % 2 == 0) {
+            _x = boss_x; _y = boss_y; _t = 7; _gp_gen =  (unsigned char *)("?"); print_str ();
+            _x = boss_x + 1; _y = boss_y; _t = 7; _gp_gen =  (unsigned char *)(" "); print_str ();
+        } else {
+            _x = boss_x; _y = boss_y; _t = 7; _gp_gen =  (unsigned char *)(">"); print_str ();
+            _x = boss_x + 1; _y = boss_y; _t = 7; _gp_gen =  (unsigned char *)(" "); print_str ();
+        }
+        rdb = boss_x >> 1;
+        rdc = (boss_y >> 1) - 1;
+
+        if (rdb == p_tx && rdc == p_ty && p_estado == EST_NORMAL) {
+            p_killme = 1;
+        }
+        boss_x--;
+    }
+    if (boss_x == 0) {  //se fue el hueso
+        boss_aux_3 = 0;
+        _x = boss_x + 1; _y = boss_y; _t = 7; _gp_gen =  (unsigned char *)(" "); print_str ();
+        boss_aux_1 = 0;
+    }
+
+    if (boss_action == 10) { //muerte
+        _x = 13;_y = 7;_t = 44;update_tile ();
+        _x = 13;_y = 8;_t = 44;update_tile ();
+        _x = 12;_y = 7;_t = 44;update_tile ();
+        _x = 12;_y = 8;_t = 44;update_tile ();
+        boss_1_counter--;
+        if (boss_1_counter == 0) {
+            boss_action = 99;
+            _x = 13;_y = 7;_t = 0;update_tile ();
+            _x = 13;_y = 8;_t = 0;update_tile ();
+            _x = 12;_y = 7;_t = 0;update_tile ();
+            _x = 12;_y = 8;_t = 0;update_tile ();
+            stage_clear_animation = 1;
+        }
+    }
+    
+    if (p_tx >= 13 && (p_ty == 7 || p_ty == 8) && p_estado == EST_NORMAL) {
+        p_killme = 1;
+    }
+    
 }
 
 void play_boss1() {
@@ -156,7 +223,7 @@ void draw_boss_life(void) {
 }
 
 void start_dead(void) {
-    fire_count_animation = 48;
+    fire_count_animation = 42;
     dead_animation = 1;
     tick_frame = 0;
     do_not_move = 1;
@@ -216,6 +283,17 @@ void get_object(unsigned int p) {
     _x = p_tx; _y = p_ty; _t = 1; _n = 0; update_tile();
    save_object();
    print_points();
+    if (points >= 10000 && umbral_points == 0) {
+        up_live(1);
+    }
+
+    if (points >= 20000 && umbral_points == 1) {
+        up_live(2);
+    }
+
+    if (points >= 40000 && umbral_points == 2) {
+        up_live(3);
+    }
 
 }
 

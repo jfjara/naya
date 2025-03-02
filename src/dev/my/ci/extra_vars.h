@@ -15,7 +15,7 @@ unsigned char boss_y = 8;
 unsigned char boss_screen_buffer[3] = {0};
 unsigned char boss_animation = 0;
 unsigned char is_lunge = 0;
-unsigned char boss_aux_1, boss_aux_2, diff_x, diff_y;
+unsigned char boss_aux_1, boss_aux_2, boss_aux_3, diff_x, diff_y;
 unsigned char b_aux = 0;
 unsigned char vector_counter = 0;
 unsigned char ene_direction = 1; // abajo

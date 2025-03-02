@@ -73,7 +73,7 @@
 #define WALLS_STOP_ENEMIES				// If defined, enemies react to the scenary
 //#define EVERYTHING_IS_A_WALL				// If defined, any tile <> type 0 is a wall, otherwise just 8.
 //#define BODY_COUNT_ON 			2		// If defined, count enemies on flag #
-//#define DISABLE_PLATFORMS 				// Disables platforms in side-view
+#define DISABLE_PLATFORMS 				// Disables platforms in side-view
 //#define CUSTOM_LOCK_CLEAR 				// use `custom_lock_clear.h` to remove a lock from screen
 
 //#define DIE_AND_RESPAWN 					// Remember last safe spot & respawn there
@@ -320,7 +320,7 @@
 #define PLAYER_AX					64		// Acceleration (24/64 = 0,375 p?xels/frame^2)
 #define PLAYER_RX					64		// Friction (32/64 = 0,5 p?xels/frame^2)
 #define TIME_DOG_ANIMATION			64
-#define TIME_STAGE_CLEAR_ANIMATION  110
+#define TIME_STAGE_CLEAR_ANIMATION  105
 
 #define BOSS_1_TIME_LUNGE           48 
 // ============================================================================

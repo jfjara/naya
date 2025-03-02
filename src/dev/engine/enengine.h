@@ -199,7 +199,11 @@ void enems_load (void) {
 				ld  (hl), a
 		#endasm
 
-		enoffsmasi = enoffs + enit;				
+		enoffsmasi = enoffs + enit;		
+		
+		if (malotes [enoffsmasi].life > 0) {
+			malotes [enoffsmasi].life = level_data.enems_life;
+		}
 
 		#ifdef RESPAWN_ON_ENTER
 			// Back to life!
@@ -786,7 +790,7 @@ void enems_move (void) {
 
 					en_an_next_frame [enit] = sprite_17_a;
 
-					#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
+					//#if !defined PLAYER_GENITAL && !defined DISABLE_PLATFORMS							
 						if (_en_t != 4) {
 							if (_en_t == 5) {
 								--_en_life_boss;
@@ -797,17 +801,22 @@ void enems_move (void) {
 									boss_1_counter = 16;
 								}
 								draw_sub_boss_life();
+
+								if (_en_life_boss > 0 && level == 1 && boss_aux_3 == 0) {
+									boss_action = 2; // lanzar hueso
+								} 
 							} else {
 								-- _en_life;
 							}
-							if (bullets_who[gpjt] == 1) {
-								shoots--;
-								bullets_who[b_it] = 0;
-							}
 						} 
-					#else
-						-- _en_life;
-					#endif
+						if (bullets_who[gpjt] == 1) {
+							shoots--;
+							bullets_who[b_it] = 0;
+						}
+						
+					// #else
+					// 	-- _en_life;
+					// #endif
 
 					if (_en_life == 0 || _en_life_boss == 0) {
 						enems_draw_current ();

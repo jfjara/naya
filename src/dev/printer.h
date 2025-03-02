@@ -145,7 +145,7 @@ void animate_tiles(unsigned char doble_speed) {
 	for (gpit = 0; gpit < 150; ++ gpit) {
 		_t = *map_pointer;
 
-		if (level == 0) {
+		if (level == 0 || level == 2) {
 			if (_t == 5) {
 				_t = 6;
 				has_animate = 1;

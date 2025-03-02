@@ -82,7 +82,7 @@ extern unsigned char mapa [0];
 
 #ifndef DEACTIVATE_KEYS
 	extern CERROJOS cerrojos [0];
-	#asm
+	#asmº
 		._cerrojos defs 128	; 32 * 4
 	#endasm
 #endif

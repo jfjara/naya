@@ -1,15 +1,6 @@
 // MTE MK1 (la Churrera) v5.0
 // Copyleft 2010-2014, 2020 by the Mojon Twins
 
-
-//  _x = 5; _y = 0; _t = animate_dog; _n = 5; print_number_wan();
-//  _x = 7; _y = 0; _t = _en_life; _n = 5; print_number_wan();
-if (n_pant == 0) { //pantalla del boss 1. Preparar el previo
-    boss = 1;
-} else {
-    boss = 0;
-}
-
 if (slevel == 4 && stage_clear_animation == 0) {
     if (total_candies >= 12) {
         stage_clear_animation = 1;
@@ -67,6 +58,7 @@ if (stage_clear_animation == 1) {
         stage_clear_animation = 0;
         animate_dog = 0;
         time_animation = TIME_DOG_ANIMATION;
+        boss = 0;
         
         if (slevel == 4) {
             slevel = 0;
@@ -83,14 +75,15 @@ if (stage_clear_animation == 1) {
         for (rda = 0; rda < 80; rda++) {
 			objects[rda].n_pant = 99; objects[rda].gpit = objects[rda].x = objects[rda].y = 255;
 		}
-        
+        objects_index = 0;
+        player_init();
         if (slevel == 3) {
             // vamos al nivel del boss
+            boss = 1;
             n_pant = 0;
             timer_t = 60;
             #include "my/level_boss_screen.h"
             gpy = PLAYER_INI_Y << 4; p_y = gpy << 6 - 8;
-
         } else if (slevel == 4) {
             n_pant = 1;
             timer_t = 10;
@@ -99,15 +92,18 @@ if (stage_clear_animation == 1) {
             draw_candy_level();
             max_shoots = 1;
         } else {
+            total_candies = 0;
+            p_life = 2;
+            max_shoots = 1;
             timer_t = 99;  
             #include "my/level_screen.h"
             total_candies = 0;
             draw_candy_level();
-            max_shoots = 1;
+            draw_player_sublives();
         }
         
         timer_on = 1;
         do_not_move = 0;
-            
+         
     }
 }

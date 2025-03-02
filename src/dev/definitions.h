@@ -274,6 +274,7 @@ unsigned char objs_old, keys_old, life_old, killed_old;
 	#else
 	unsigned char *level_str = "LEVEL 0X - 0X";
 	unsigned char *level_boss_1_str = "KING ANT";
+	unsigned char *level_boss_2_str = "SIR BONES";
 	unsigned char *level_bonus_str = "BONUS LEVEL";
 	#endif
 	unsigned char silent_level = 0;
@@ -341,6 +342,6 @@ typedef struct
 	unsigned char n_pant, x, y, gpit;
 } OBJECT;
 
-OBJECT objects[80];
+OBJECT objects[100];
 unsigned char objects_index;
 unsigned char dead_animation = 0;

@@ -10,7 +10,8 @@
 	
 	level_str [7] = 49 + level;
 	level_str[12] = 49 + slevel;
-	_x = 12; _y = 12; _t = 71; _gp_gen = level_boss_1_str; print_str ();
+	if (level == 0) {_x = 12; _y = 12; _t = 71; _gp_gen = level_boss_1_str; print_str ();}
+	if (level == 1) {_x = 12; _y = 12; _t = 71; _gp_gen = level_boss_2_str; print_str ();}
 	sp_UpdateNow ();
 	// #ifdef MODE_128K
 	// 	PLAY_SOUND (SFX_START);

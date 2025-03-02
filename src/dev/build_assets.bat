@@ -40,7 +40,7 @@ echo Converting Fixed Screens
 echo Converting levels
 ..\..\src\utils\buildlevels_MK1.exe ..\bin\level0.bin mapfile=..\map\mapa0.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work0.png behsfile=..\gfx\behs0.txt defaultink=7 spritesfile=..\gfx\sprites0.png enemsfile=..\enems\enems0.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
 ..\..\src\utils\buildlevels_MK1.exe ..\bin\level1.bin mapfile=..\map\mapa1.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work1.png behsfile=..\gfx\behs1.txt defaultink=7 spritesfile=..\gfx\sprites1.png enemsfile=..\enems\enems1.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
-..\..\src\utils\buildlevels_MK1.exe ..\bin\level2.bin mapfile=..\map\mapa2.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work2.png behsfile=..\gfx\behs2.txt defaultink=7 spritesfile=..\gfx\sprites2.png enemsfile=..\enems\enems2.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
+..\..\src\utils\buildlevels_MK1.exe ..\bin\level2.bin mapfile=..\map\mapa2.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work2.png behsfile=..\gfx\behs2.txt defaultink=6 spritesfile=..\gfx\sprites2.png enemsfile=..\enems\enems2.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
 ..\..\src\utils\buildlevels_MK1.exe ..\bin\level3.bin mapfile=..\map\mapa3.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work3.png behsfile=..\gfx\behs3.txt defaultink=7 spritesfile=..\gfx\sprites3.png enemsfile=..\enems\enems3.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
 ..\..\src\utils\buildlevels_MK1.exe ..\bin\level4.bin mapfile=..\map\mapa4.MAP nsprites=24 map_w=3 map_h=10 tilesfile=..\gfx\work4.png behsfile=..\gfx\behs4.txt defaultink=7 spritesfile=..\gfx\sprites4.png enemsfile=..\enems\enems4.ene scr_ini=27 ini_x=2 ini_y=8 enems_life=2 > nul
 

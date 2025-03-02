@@ -22,6 +22,6 @@
 	espera_activa (300);
 	PLAY_MUSIC (levels [level].music_id + slevel);
 	
-	total_candies = 0;
+	
 	
 }
